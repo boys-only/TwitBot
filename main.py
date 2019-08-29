@@ -11,3 +11,6 @@ def main():
 
     # Get the browser and open it
     browser = webdriver.Chrome(options=chrome_options)
+
+    # TODO: Create a list of words that can be used to form a tweet
+    # TODO: Create a method of composing tweets
