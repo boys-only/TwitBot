@@ -3,7 +3,9 @@ This fella will be a bot that tweets
 
 
 --Drivers-- 
+You'll need to get a chrome driver
 
-You'll need to get a driver chrome: https://chromedriver.storage.googleapis.com/index.html?path=76.0.3809.126/ 
+I recommend using pip: pip install chromedriver
 
-You need to place it in PATH
+Or download it manually and add it to PATH: https://chromedriver.storage.googleapis.com/index.html?path=76.0.3809.126/ 
+
