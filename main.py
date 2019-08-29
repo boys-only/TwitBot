@@ -14,3 +14,8 @@ def main():
 
     # TODO: Create a list of words that can be used to form a tweet
     # TODO: Create a method of composing tweets
+
+    browser.get("https://google.com")
+
+
+main()
