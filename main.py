@@ -40,7 +40,15 @@ def login(browser):
     loginButton.click()
 
     # Enter username
-    
+    usernamebox = browser.find_element_by_xpath("//*[@id=\"page-container\"]/div/div[1]/form/fieldset/div[1]/input")
+    usernamebox.click()
+    usernamebox.send_keys(loginInfo.username)
+
+    # Enter password
+    passwordbox = browser.find_element_by_xpath("//*[@id=\"page-container\"]/div/div[1]/form/fieldset/div[2]/input")
+    passwordbox.click()
+    passwordbox.send_keys(loginInfo.password)
+
 
 
 main()
