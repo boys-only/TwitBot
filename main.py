@@ -57,6 +57,11 @@ def login(browser):
         passwordbox.click()
         passwordbox.send_keys(loginInfo.password)
 
+        # Click log in
+        # <button type="submit" class="submit EdgeButton EdgeButton--primary EdgeButtom--medium">Log in</button>
+        loginButton = browser.find_element_by_xpath("//*[@id=\"page-container\"]/div/div[1]/form/div[2]/button")
+        loginButton.click()
+
     # Catch this exception so you can still close the browser
     except common.exceptions.NoSuchElementException:
         print("Element not found")
