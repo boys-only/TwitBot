@@ -13,10 +13,11 @@ def main():
     browser = webdriver.Chrome(options=chrome_options)
 
     try:
-
         # Send the bot to twitter
         browser.get("https://twitter.com")
 
+        # Login to twitter
+        login(browser)
         # TODO: Create a list of words that can be used to form a tweet
         # TODO: Create a method of composing tweets
         # Limit tweet to 240 chars
@@ -31,6 +32,7 @@ def main():
                 quit = input("Enter Q to close browser")
 
 
-
+def login(browser):
+    
 
 main()
