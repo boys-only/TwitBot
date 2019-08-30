@@ -32,7 +32,7 @@ def main():
         proceed = input("Create tweet? [y/n]: ")
 
         if proceed in affirmatives:
-            composeTweet(browser)
+            composeTweet()
         else:
             pass
 
