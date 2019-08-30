@@ -6,6 +6,10 @@ import time
 
 
 def main():
+    # Affirmatives and negatives for prompts
+    affirmatives = ["yes", "Yes", "y", "Y"]
+    negatives = ["No", "no", "N", "n"]
+    
     # Create chrome options to disable notifications
     chrome_options = webdriver.ChromeOptions()
     prefs = {"profile.default_content_setting_values.notifications": 2}
@@ -21,9 +25,15 @@ def main():
 
         # Login to twitter
         login(browser)
-        # TODO: Create a list of words that can be used to form a tweet
-        # TODO: Create a method of composing tweets
-        # Limit tweet to 240 chars
+
+        # Prompt user and ask if they want to compose a tweet
+
+        proceed = input("Create tweet? [y/n]: ")
+
+        if proceed in affirmatives:
+            composeTweet(browser)
+        else:
+            pass
 
     finally:
         quitChars = ["q", "Q"]
@@ -66,5 +76,8 @@ def login(browser):
     except common.exceptions.NoSuchElementException:
         print("Element not found")
 
+
+def composeTweet(browser):
+    pass
 
 main()
