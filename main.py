@@ -3,6 +3,7 @@ from selenium import common
 from selenium.webdriver.common.keys import Keys
 import loginInfo
 import time
+import markov
 
 
 def main():
@@ -77,7 +78,10 @@ def login(browser):
         print("Element not found")
 
 
-def composeTweet(browser):
-    pass
+def composeTweet():
+    # Open the text file
+    file = open("words.txt", "r")
+    mark = markov.Markov(file)
+    print(mark.generate_markov_text())
 
-main()
+composeTweet()
