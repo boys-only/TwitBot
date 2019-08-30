@@ -9,7 +9,7 @@ def main():
     # Affirmatives and negatives for prompts
     affirmatives = ["yes", "Yes", "y", "Y"]
     negatives = ["No", "no", "N", "n"]
-    
+
     # Create chrome options to disable notifications
     chrome_options = webdriver.ChromeOptions()
     prefs = {"profile.default_content_setting_values.notifications": 2}
