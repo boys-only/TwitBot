@@ -87,6 +87,14 @@ def composeTweet():
     mark.database()
     tweet = mark.generate_markov_text()
     print(tweet + "\nTweet length: ", len(tweet))
-    return tweet
+    if len(tweet) > 280:
+        while len(tweet) > 280:
+            tweet = mark.generate_markov_text()
+            print(tweet + "\nTweet length: ", len(tweet))
+    else:
+        return tweet
+    
+
+
 
 composeTweet()
