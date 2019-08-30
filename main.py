@@ -33,6 +33,14 @@ def main():
 
 
 def login(browser):
+    # Login button
+    # <input type="submit" class="EdgeButton EdgeButton--secondary EdgeButton--medium submit js-submit" value="Log in">
+    # xpath: //*[@id=\"doc\"]/div/div[1]/div[1]/div[2]/div[2]/div/a[2]
+    loginButton = browser.find_element_by_xpath("//*[@id=\"doc\"]/div/div[1]/div[1]/div[2]/div[2]/div/a[2]")
+    loginButton.click()
+
+    # Enter username
     
+
 
 main()
