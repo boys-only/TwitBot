@@ -82,6 +82,11 @@ def composeTweet():
     # Open the text file
     file = open("words.txt", "r")
     mark = markov.Markov(file)
-    print(mark.generate_markov_text())
+    mark.file_to_words()
+    mark.triples()
+    mark.database()
+    tweet = mark.generate_markov_text()
+    print(tweet + "\nTweet length: ", len(tweet))
+    return tweet
 
 composeTweet()
