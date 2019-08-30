@@ -1,6 +1,8 @@
 from selenium import webdriver
+from selenium import common
 from selenium.webdriver.common.keys import Keys
 import loginInfo
+import time
 
 
 def main():
@@ -11,6 +13,7 @@ def main():
 
     # Get the browser and open it
     browser = webdriver.Chrome(options=chrome_options)
+    browser.maximize_window()
 
     try:
         # Send the bot to twitter
@@ -33,21 +36,31 @@ def main():
 
 
 def login(browser):
-    # Login button
-    # <input type="submit" class="EdgeButton EdgeButton--secondary EdgeButton--medium submit js-submit" value="Log in">
-    # xpath: //*[@id=\"doc\"]/div/div[1]/div[1]/div[2]/div[2]/div/a[2]
-    loginButton = browser.find_element_by_xpath("//*[@id=\"doc\"]/div/div[1]/div[1]/div[2]/div[2]/div/a[2]")
-    loginButton.click()
+    try:
+        # Login button
+        # <input type="submit" class="EdgeButton EdgeButton--secondary EdgeButton--medium submit js-submit" value="Log in">
+        # xpath: //*[@id=\"doc\"]/div/div[1]/div[1]/div[2]/div[2]/div/a[2]
+        loginButton = browser.find_element_by_xpath("//*[@id=\"doc\"]/div/div[1]/div[1]/div[2]/div[2]/div/a[2]")
+        loginButton.click()
 
-    # Enter username
-    usernamebox = browser.find_element_by_xpath("//*[@id=\"page-container\"]/div/div[1]/form/fieldset/div[1]/input")
-    usernamebox.click()
-    usernamebox.send_keys(loginInfo.username)
+        # Wait a minute
+        time.sleep(5)
 
-    # Enter password
-    passwordbox = browser.find_element_by_xpath("//*[@id=\"page-container\"]/div/div[1]/form/fieldset/div[2]/input")
-    passwordbox.click()
-    passwordbox.send_keys(loginInfo.password)
+        # Enter username
+        # <input class="js-username-field email-input js-initial-focus" type="text" name="session[username_or_email]" autocomplete="on" value="" placeholder="Phone, email or username">
+        usernamebox = browser.find_element_by_css_selector("#page-container > div > div.signin-wrapper > form > fieldset > div:nth-child(2) > input")
+        usernamebox.click()
+        usernamebox.send_keys(loginInfo.username)
+
+        # Enter password
+        passwordbox = browser.find_element_by_xpath("//*[@id=\"page-container\"]/div/div[1]/form/fieldset/div[2]/input")
+        passwordbox.click()
+        passwordbox.send_keys(loginInfo.password)
+
+    # Catch this exception so you can still close the browser
+    except common.exceptions.NoSuchElementException:
+        print("Element not found")
+
 
 
 
