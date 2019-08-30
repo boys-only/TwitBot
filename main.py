@@ -27,12 +27,12 @@ def main():
 
     finally:
         quitChars = ["q", "Q"]
-        quit = input("Enter Q to close browser")
-        while quit not in quitChars:
-            if quit == "q" or quit == "Q":
+        quiter = input("Enter Q to close browser")
+        while quiter not in quitChars:
+            if quiter == "q" or quiter == "Q":
                 browser.quit()
             else:
-                quit = input("Enter Q to close browser")
+                quiter = input("Enter Q to close browser")
 
 
 def login(browser):
@@ -65,8 +65,6 @@ def login(browser):
     # Catch this exception so you can still close the browser
     except common.exceptions.NoSuchElementException:
         print("Element not found")
-
-
 
 
 main()
