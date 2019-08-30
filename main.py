@@ -3,9 +3,14 @@ from selenium import common
 from selenium.webdriver.common.keys import Keys
 import loginInfo
 import time
+import markov
 
 
 def main():
+    # Affirmatives and negatives for prompts
+    affirmatives = ["yes", "Yes", "y", "Y"]
+    negatives = ["No", "no", "N", "n"]
+
     # Create chrome options to disable notifications
     chrome_options = webdriver.ChromeOptions()
     prefs = {"profile.default_content_setting_values.notifications": 2}
@@ -21,9 +26,15 @@ def main():
 
         # Login to twitter
         login(browser)
-        # TODO: Create a list of words that can be used to form a tweet
-        # TODO: Create a method of composing tweets
-        # Limit tweet to 240 chars
+
+        # Prompt user and ask if they want to compose a tweet
+
+        proceed = input("Create tweet? [y/n]: ")
+
+        if proceed in affirmatives:
+            composeTweet(browser)
+        else:
+            pass
 
     finally:
         quitChars = ["q", "Q"]
@@ -67,4 +78,23 @@ def login(browser):
         print("Element not found")
 
 
-main()
+def composeTweet():
+    # Open the text file
+    file = open("words.txt", "r")
+    mark = markov.Markov(file)
+    mark.file_to_words()
+    mark.triples()
+    mark.database()
+    tweet = mark.generate_markov_text()
+    print(tweet + "\nTweet length: ", len(tweet))
+    if len(tweet) > 280:
+        while len(tweet) > 280:
+            tweet = mark.generate_markov_text()
+            print(tweet + "\nTweet length: ", len(tweet))
+    else:
+        return tweet
+    
+
+
+
+composeTweet()
