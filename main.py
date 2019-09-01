@@ -4,9 +4,9 @@ from selenium.webdriver.common.keys import Keys
 import loginInfo
 import time
 import markov
-import twitterscraper
-# from bs4 import BeautifulSoup
-# import requests
+
+from bs4 import BeautifulSoup
+import requests
 
 
 def main():
@@ -100,19 +100,19 @@ def composeTweet():
     
 
 def scrapetrumptweets():
-    # # Request DT's twitter page
-    # page = requests.get("https://twitter.com/realDonaldTrump")
-    #
-    # # Soupfiy it
-    # souped = BeautifulSoup(page.text, 'html.parser')
-    #
-    # # Tweet class name = js-stream-item stream-item stream-item
-    # # #stream-item-tweet-1167552549974675458
-    #
-    # # Narrow search down to tweets
-    # souped.
+    # Request DT's twitter page
+    page = requests.get("https://twitter.com/realDonaldTrump")
 
+    # Soupfiy it
+    souped = BeautifulSoup(page.text, 'html.parser')
 
+    # Tweet class name = js-stream-item stream-item stream-item
+    # #stream-item-tweet-1167552549974675458
 
-
-scrapetrumptweets()
+    # Narrow search down to tweets
+    # <p class="TweetTextSize TweetTextSize--normal js-tweet-text tweet-text" lang="en" data-aria-label-part="0">
+    tweets = souped.find_all("p", class_="TweetTextSize TweetTextSize--normal js-tweet-text tweet-text")
+    file = open("trump.txt", "w+")
+    for i in tweets:
+        print(i.text)
+        file.write(i.text + "\n")
