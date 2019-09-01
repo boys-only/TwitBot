@@ -1,4 +1,7 @@
 from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 from selenium import common
 from selenium.webdriver.common.keys import Keys
 import loginInfo
@@ -13,7 +16,8 @@ def main():
     # Affirmatives and negatives for prompts
     affirmatives = ["yes", "Yes", "y", "Y"]
     negatives = ["No", "no", "N", "n"]
-
+    quitChars = ["q", "Q"]
+    tweet = None
     # Create chrome options to disable notifications
     chrome_options = webdriver.ChromeOptions()
     prefs = {"profile.default_content_setting_values.notifications": 2}
@@ -21,48 +25,39 @@ def main():
 
     # Get the browser and open it
     browser = webdriver.Chrome(options=chrome_options)
-    browser.maximize_window()
+    # If it can't for some reason find the window, use this
+    # window = browser.current_window_handle
+    # browser.switch_to.window(window)
 
-    try:
-        # Send the bot to twitter
-        browser.get("https://twitter.com")
-
-        # Login to twitter
-        login(browser)
-
-        # Prompt user and ask if they want to compose a tweet
-
-        proceed = input("Create tweet [y/n]")
-
-        if proceed in affirmatives:
-            composetweet()
-        else:
-            pass
-
-    finally:
-        quitChars = ["q", "Q"]
-        quiter = input("Enter Q to close browser")
-        while quiter not in quitChars:
-            if quiter == "q" or quiter == "Q":
-                browser.quit()
-            else:
-                quiter = input("Enter Q to close browser")
+    navigate = input("What would you like to do? (login, composetweet, scrape) ")
+    while navigate not in quitChars:
+        if navigate == "login":
+            login(browser)
+        elif navigate == "composetweet":
+            tweet = composetweet()
+            print(tweet)
+        elif navigate == "scrape":
+            scrapetrumptweets()
+        navigate = input("What would you like to do? (login, composetweet, scrape) ")
+    browser.quit()
 
 
 def login(browser):
     try:
+        # Send the bot to twitter
+        browser.get("https://twitter.com")
+
         # Login button
         # <input type="submit" class="EdgeButton EdgeButton--secondary EdgeButton--medium submit js-submit" value="Log in">
         # xpath: //*[@id=\"doc\"]/div/div[1]/div[1]/div[2]/div[2]/div/a[2]
         loginButton = browser.find_element_by_xpath("//*[@id=\"doc\"]/div/div[1]/div[1]/div[2]/div[2]/div/a[2]")
         loginButton.click()
 
-        # Wait a minute
-        time.sleep(5)
-
         # Enter username
         # <input class="js-username-field email-input js-initial-focus" type="text" name="session[username_or_email]" autocomplete="on" value="" placeholder="Phone, email or username">
-        usernamebox = browser.find_element_by_css_selector("#page-container > div > div.signin-wrapper > form > fieldset > div:nth-child(2) > input")
+        # browser.find_element_by_css_selector("#page-container > div > div.signin-wrapper > form > fieldset > div:nth-child(2) > input")
+        # Using this implementation waits until the item is present before trying to click it
+        usernamebox = WebDriverWait(browser, 5).until(EC.presence_of_element_located((By.CSS_SELECTOR, "#page-container > div > div.signin-wrapper > form > fieldset > div:nth-child(2) > input")))
         usernamebox.click()
         usernamebox.send_keys(loginInfo.username)
 
@@ -75,6 +70,7 @@ def login(browser):
         # <button type="submit" class="submit EdgeButton EdgeButton--primary EdgeButtom--medium">Log in</button>
         loginButton = browser.find_element_by_xpath("//*[@id=\"page-container\"]/div/div[1]/form/div[2]/button")
         loginButton.click()
+
         print("Login successful!")
     # Catch this exception so you can still close the browser
     except common.exceptions.NoSuchElementException:
@@ -84,20 +80,22 @@ def login(browser):
 def composetweet():
     # Open the text file
     file = open("trump.txt", "r")
+    # Construct a markov with the file
     mark = markov.Markov(file)
+    # Create the map of the words
     mark.file_to_words()
     mark.triples()
     mark.database()
-    tweet = mark.generate_markov_text()
-    print(tweet + "\nTweet length: ", len(tweet))
-    if len(tweet) > 280:
-        while len(tweet) > 280:
-            tweet = mark.generate_markov_text()
-            print(tweet + "\nTweet length: ", len(tweet))
+    # Generate a markov text
+    text = mark.generate_markov_text()
+    print(text + "\nTweet length: ", len(text))
+    if len(text) > 280:
+        while len(text) > 280:
+            text = mark.generate_markov_text()
+            print(text + "\nTweet length: ", len(text))
     else:
         file.close()
-        return tweet
-    
+        return text
 
 def scrapetrumptweets():
     # Request DT's twitter page
@@ -117,4 +115,4 @@ def scrapetrumptweets():
         file.write(result + "\n")
 
 
-scrapetrumptweets()
+main()

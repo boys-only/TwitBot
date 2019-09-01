@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="2fd1c249-a073-4289-8d17-f0cad00f2d2c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trump.txt" beforeDir="false" afterPath="$PROJECT_DIR$/trump.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/markov.py" beforeDir="false" afterPath="$PROJECT_DIR$/markov.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,11 +16,20 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="539">
-              <caret line="113" column="47" lean-forward="true" selection-start-line="113" selection-start-column="47" selection-end-line="113" selection-end-column="47" />
+            <state relative-caret-position="314">
+              <caret line="97" column="8" selection-start-line="97" selection-start-column="8" selection-end-line="97" selection-end-column="8" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/markov.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="501">
+              <caret line="40" column="42" selection-start-line="40" selection-start-column="42" selection-end-line="40" selection-end-column="42" />
             </state>
           </provider>
         </entry>
@@ -63,11 +72,11 @@
         <option value="$PROJECT_DIR$/loginInfo.py" />
         <option value="$PROJECT_DIR$/words.txt" />
         <option value="$PROJECT_DIR$/scraper.py" />
-        <option value="$PROJECT_DIR$/markov.py" />
         <option value="$PROJECT_DIR$/gettext.py" />
         <option value="$PROJECT_DIR$/trumptext.txt" />
-        <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/trump.txt" />
+        <option value="$PROJECT_DIR$/markov.py" />
+        <option value="$PROJECT_DIR$/main.py" />
       </list>
     </option>
   </component>
@@ -186,13 +195,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/scraper.py" />
-    <entry file="file://$PROJECT_DIR$/markov.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="479">
-          <caret line="40" column="42" selection-start-line="40" selection-start-column="42" selection-end-line="40" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/gettext.py" />
     <entry file="file://$PROJECT_DIR$/trumptext.txt" />
     <entry file="file://$PROJECT_DIR$/loginInfo.py">
@@ -212,10 +214,17 @@
     <entry file="file://$PROJECT_DIR$/trump.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/markov.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="501">
+          <caret line="40" column="42" selection-start-line="40" selection-start-column="42" selection-end-line="40" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="539">
-          <caret line="113" column="47" lean-forward="true" selection-start-line="113" selection-start-column="47" selection-end-line="113" selection-end-column="47" />
+        <state relative-caret-position="314">
+          <caret line="97" column="8" selection-start-line="97" selection-start-column="8" selection-end-line="97" selection-end-column="8" />
           <folding>
             <element signature="e#0#30#0" expanded="true" />
           </folding>
