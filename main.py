@@ -4,7 +4,7 @@ from selenium.webdriver.common.keys import Keys
 import loginInfo
 import time
 import markov
-
+import re
 from bs4 import BeautifulSoup
 import requests
 
@@ -35,7 +35,7 @@ def main():
         proceed = input("Create tweet [y/n]")
 
         if proceed in affirmatives:
-            composeTweet()
+            composetweet()
         else:
             pass
 
@@ -81,9 +81,9 @@ def login(browser):
         print("Element not found")
 
 
-def composeTweet():
+def composetweet():
     # Open the text file
-    file = open("words.txt", "r")
+    file = open("trump.txt", "r")
     mark = markov.Markov(file)
     mark.file_to_words()
     mark.triples()
@@ -106,13 +106,15 @@ def scrapetrumptweets():
     # Soupfiy it
     souped = BeautifulSoup(page.text, 'html.parser')
 
-    # Tweet class name = js-stream-item stream-item stream-item
-    # #stream-item-tweet-1167552549974675458
-
     # Narrow search down to tweets
     # <p class="TweetTextSize TweetTextSize--normal js-tweet-text tweet-text" lang="en" data-aria-label-part="0">
     tweets = souped.find_all("p", class_="TweetTextSize TweetTextSize--normal js-tweet-text tweet-text")
     file = open("trump.txt", "w+")
     for i in tweets:
-        print(i.text)
-        file.write(i.text + "\n")
+        result = re.sub(r"http\S+", "", i.text)
+        result = re.sub(r"pic\S+", "", result)
+        print(result)
+        file.write(result + "\n")
+
+
+scrapetrumptweets()
