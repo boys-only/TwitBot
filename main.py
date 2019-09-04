@@ -35,15 +35,23 @@ def main():
     while navigate not in quitChars:
         if navigate == "login":
             login(browser)
-            main.loggedin = True
+            loggedin = True
         elif navigate == "composetweet":
             tweet = composetweet()
             print(tweet)
         elif navigate == "scrape":
             scrapetrumptweets()
         # Ensure the user has logged in and a tweet has been composed first
-        elif navigate == "posttweet" and tweet is not None :#and loggedin:
-            posttweet(tweet, browser)
+        elif navigate == "posttweet":
+            # Inform the user if a tweet has not been composed yet
+            if tweet is None:
+                print("No tweet to post! Compose one first.")
+            # Make sure the user is logged in
+            elif not loggedin:
+                print("You must log in first!")
+            # Only if the user is logged in and has a tweet composed, post it
+            elif tweet is not None and loggedin:
+                posttweet(tweet, browser)
         navigate = input("What would you like to do? (login, composetweet, scrape) ")
     browser.quit()
 
