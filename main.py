@@ -38,7 +38,7 @@ def main():
             loggedin = True
         elif navigate == "composetweet":
             tweet = composetweet()
-            print(tweet)
+            # print(tweet)
         elif navigate == "scrape":
             scrapetrumptweets()
         # Ensure the user has logged in and a tweet has been composed first
@@ -104,6 +104,7 @@ def composetweet():
     text = mark.generate_markov_text()
     # print("First try \n", text + "\nTweet length: ", len(text))
     if len(text) < 280:
+        print("Tweet composed!")
         return text
     else:
         # While the text is longer than 280 chars, keep generating new texts
@@ -115,6 +116,7 @@ def composetweet():
             if len(text) < 280:
                 # print(text + "\nTweet length: ", len(text))
                 file.close()
+                print("Tweet composed!")
                 return text
 
 
