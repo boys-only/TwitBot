@@ -18,6 +18,7 @@ def main():
     negatives = ["No", "no", "N", "n"]
     quitChars = ["q", "Q"]
     tweet = None
+    loggedin = False
     # Create chrome options to disable notifications
     chrome_options = webdriver.ChromeOptions()
     prefs = {"profile.default_content_setting_values.notifications": 2}
@@ -29,15 +30,20 @@ def main():
     # window = browser.current_window_handle
     # browser.switch_to.window(window)
 
-    navigate = input("What would you like to do? (login, composetweet, scrape) ")
+    # The user can use the console to to various things
+    navigate = input("What would you like to do? (login, composetweet, scrape, posttweet) ")
     while navigate not in quitChars:
         if navigate == "login":
             login(browser)
+            main.loggedin = True
         elif navigate == "composetweet":
             tweet = composetweet()
             print(tweet)
         elif navigate == "scrape":
             scrapetrumptweets()
+        # Ensure the user has logged in and a tweet has been composed first
+        elif navigate == "posttweet" and tweet is not None :#and loggedin:
+            posttweet(tweet, browser)
         navigate = input("What would you like to do? (login, composetweet, scrape) ")
     browser.quit()
 
@@ -88,14 +94,21 @@ def composetweet():
     mark.database()
     # Generate a markov text
     text = mark.generate_markov_text()
-    print(text + "\nTweet length: ", len(text))
-    if len(text) > 280:
-        while len(text) > 280:
-            text = mark.generate_markov_text()
-            print(text + "\nTweet length: ", len(text))
-    else:
-        file.close()
+    # print("First try \n", text + "\nTweet length: ", len(text))
+    if len(text) < 280:
         return text
+    else:
+        # While the text is longer than 280 chars, keep generating new texts
+        while len(text) > 280:
+            # Generate a new text
+            text = mark.generate_markov_text()
+            # print(text + "\nTweet length: ", len(text))
+            # If it is less than 280 chars, return it
+            if len(text) < 280:
+                # print(text + "\nTweet length: ", len(text))
+                file.close()
+                return text
+
 
 def scrapetrumptweets():
     # Request DT's twitter page
@@ -114,5 +127,8 @@ def scrapetrumptweets():
         print(result)
         file.write(result + "\n")
 
+
+def posttweet(tweet, browser):
+    print(tweet)
 
 main()
