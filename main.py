@@ -130,12 +130,12 @@ def scrapetrumptweets():
     # Narrow search down to tweets
     # <p class="TweetTextSize TweetTextSize--normal js-tweet-text tweet-text" lang="en" data-aria-label-part="0">
     tweets = souped.find_all("p", class_="TweetTextSize TweetTextSize--normal js-tweet-text tweet-text")
-    file = open("trump.txt", "w+")
+    file = open("trump.txt", "a+")
     for i in tweets:
         result = re.sub(r"http\S+", "", i.text)
         result = re.sub(r"pic\S+", "", result)
         print(result)
-        file.append(result + "\n")
+        file.write(result + "\n")
 
 
 def posttweet(tweet, browser):
