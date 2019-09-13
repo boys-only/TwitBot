@@ -38,7 +38,7 @@ def main():
             loggedin = True
         elif navigate == "composetweet":
             tweet = composetweet()
-            # print(tweet)
+            print(tweet)
         elif navigate == "scrape":
             scrapetrumptweets()
         # Ensure the user has logged in and a tweet has been composed first
@@ -52,7 +52,7 @@ def main():
             # Only if the user is logged in and has a tweet composed, post it
             elif tweet is not None and loggedin:
                 posttweet(tweet, browser)
-        navigate = input("What would you like to do? (login, composetweet, scrape) ")
+        navigate = input("What would you like to do? (login, composetweet, scrape, posttweet) ")
     browser.quit()
 
 
@@ -135,10 +135,18 @@ def scrapetrumptweets():
         result = re.sub(r"http\S+", "", i.text)
         result = re.sub(r"pic\S+", "", result)
         print(result)
-        file.write(result + "\n")
+        file.append(result + "\n")
 
 
 def posttweet(tweet, browser):
-    print(tweet)
+    # XPATH for draft box
+    # //*[@id="react-root"]/div/div/div/main/div/div/div/div[1]/div/div[2]/div[2]/div[1]/div/div/div[2]/div[1]/div/div/div/div/div/div/div/div/div[1]/div/div/div/div[2]/div
+    draft = browser.find_element_by_xpath("//*[@id=\"react-root\"]/div/div/div/main/div/div/div/div[1]/div/div[2]/div[2]/div[1]/div/div/div[2]/div[1]/div/div/div/div/div/div/div/div/div[1]/div/div/div/div[2]/div")
+    draft.send_keys(tweet)
 
+    # Post button xpath
+    # //*[@id="react-root"]/div/div/div/main/div/div/div/div[1]/div/div[2]/div[2]/div[1]/div/div/div[2]/div[2]/div/div/div[2]/div[3]/div/span/span
+    postbutton = browser.find_element_by_xpath("//*[@id=\"react-root\"]/div/div/div/main/div/div/div/div[1]/div/div[2]/div[2]/div[1]/div/div/div[2]/div[2]/div/div/div[2]/div[3]/div/span/span")
+    postbutton.click()
+    print("Tweet posted!")
 main()
