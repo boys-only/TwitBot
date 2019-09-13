@@ -108,7 +108,9 @@ def composetweet():
     # print("First try \n", text + "\nTweet length: ", len(text))
     if len(text) < 280:
         print("Tweet composed!")
-        return text
+        text = text.replace('.', '')
+        text = text.replace(',', '')
+        return text.lower()
     else:
         # While the text is longer than 280 chars, keep generating new texts
         while len(text) > 280:
@@ -120,7 +122,9 @@ def composetweet():
                 # print(text + "\nTweet length: ", len(text))
                 file.close()
                 print("Tweet composed!")
-                return text
+                text = text.replace('.', '')
+                text = text.replace(',', '')
+                return text.lower()
 
 
 def scrapetrumptweets():
@@ -137,6 +141,8 @@ def scrapetrumptweets():
     for i in tweets:
         result = re.sub(r"http\S+", "", i.text)
         result = re.sub(r"pic\S+", "", result)
+        result = re.sub(".", "", result)
+        result = re.sub(",", "", result)
         print(result)
         file.write(result + "\n")
     file.close()
@@ -153,4 +159,5 @@ def posttweet(tweet, browser):
     postbutton = browser.find_element_by_xpath("//*[@id=\"react-root\"]/div/div/div/main/div/div/div/div[1]/div/div[2]/div[2]/div[1]/div/div/div[2]/div[2]/div/div/div[2]/div[3]/div/span/span")
     postbutton.click()
     print("Tweet posted!")
+
 main()
