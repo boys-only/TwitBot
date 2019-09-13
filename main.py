@@ -14,9 +14,9 @@ import requests
 
 def main():
     # Affirmatives and negatives for prompts
-    affirmatives = ["yes", "Yes", "y", "Y"]
-    negatives = ["No", "no", "N", "n"]
-    quitChars = ["q", "Q"]
+    affirmatives = ["yes", "Yes", "y", "Y", "1"]
+    negatives = ["No", "no", "N", "n", "0"]
+    quitChars = ["q", "Q", "quit", "Quit"]
     tweet = None
     loggedin = False
     # Create chrome options to disable notifications
@@ -43,15 +43,18 @@ def main():
             scrapetrumptweets()
         # Ensure the user has logged in and a tweet has been composed first
         elif navigate == "posttweet":
-            # Inform the user if a tweet has not been composed yet
-            if tweet is None:
-                print("No tweet to post! Compose one first.")
             # Make sure the user is logged in
-            elif not loggedin:
+            if not loggedin:
                 print("You must log in first!")
             # Only if the user is logged in and has a tweet composed, post it
-            elif tweet is not None and loggedin:
-                posttweet(tweet, browser)
+            else:
+                tweet = composetweet()
+                print(tweet)
+                confirmpost = input("Confirm tweet? [y/n]")
+                if confirmpost in affirmatives:
+                    posttweet(tweet, browser)
+                else:
+                    pass
         navigate = input("What would you like to do? (login, composetweet, scrape, posttweet) ")
     browser.quit()
 
@@ -136,6 +139,7 @@ def scrapetrumptweets():
         result = re.sub(r"pic\S+", "", result)
         print(result)
         file.write(result + "\n")
+    file.close()
 
 
 def posttweet(tweet, browser):
