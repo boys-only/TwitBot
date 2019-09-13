@@ -50,11 +50,17 @@ def main():
             else:
                 tweet = composetweet()
                 print(tweet)
-                confirmpost = input("Confirm tweet? [y/n]")
-                if confirmpost in affirmatives:
-                    posttweet(tweet, browser)
-                else:
-                    pass
+                loop = True
+                while loop:
+                    confirmpost = input("Confirm tweet? [y/n] ")
+                    if confirmpost in affirmatives:
+                        posttweet(tweet, browser)
+                        loop = False
+                    elif confirmpost == "reroll":
+                        tweet = composetweet()
+                        print(tweet)
+                    else:
+                        loop = False
         navigate = input("What would you like to do? (login, composetweet, scrape, posttweet) ")
     browser.quit()
 
