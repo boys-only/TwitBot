@@ -17,6 +17,7 @@ def main():
     affirmatives = ["yes", "Yes", "y", "Y", "1"]
     negatives = ["No", "no", "N", "n", "0"]
     quitChars = ["q", "Q", "quit", "Quit"]
+    people = ["kanye", "trump"]
     tweet = None
     loggedin = False
     # Create chrome options to disable notifications
@@ -32,6 +33,7 @@ def main():
 
     # The user can use the console to to various things
     navigate = input("What would you like to do? (login, composetweet, scrape, posttweet) ")
+    navigate = navigate.lower()
     while navigate not in quitChars:
         if navigate == "login":
             login(browser)
@@ -40,7 +42,12 @@ def main():
             tweet = composetweet()
             print(tweet)
         elif navigate == "scrape":
-            scrapetrumptweets()
+            person = input("Who would you scrape?: (Trump, Kanye): ")
+            person = person.lower()
+            if person in people:
+                scrapeweets(person)
+            else:
+                print("Sorry, I can't scrape that person")
         # Ensure the user has logged in and a tweet has been composed first
         elif navigate == "posttweet":
             # Make sure the user is logged in
@@ -48,6 +55,7 @@ def main():
                 print("You must log in first!")
             # Only if the user is logged in and has a tweet composed, post it
             else:
+
                 tweet = composetweet()
                 print(tweet)
                 loop = True
@@ -133,9 +141,19 @@ def composetweet():
                 return text.lower()
 
 
-def scrapetrumptweets():
-    # Request DT's twitter page
-    page = requests.get("https://twitter.com/realDonaldTrump")
+def scrapeweets(person):
+    # Decide which persons tweets to scrape
+    if person == "trump":
+        # Request DT's twitter page
+        page = requests.get("https://twitter.com/realDonaldTrump")
+        # Open Trump's file
+        file = open("trump.txt", "a+")
+    elif person == "kanye":
+        # Request Kanye's twitter page
+        page = requests.get("https://twitter.com/kanyewest")
+        # Open kanye's file
+        file = open("kanye.txt", "a+")
+
 
     # Soupfiy it
     souped = BeautifulSoup(page.text, 'html.parser')
@@ -143,12 +161,14 @@ def scrapetrumptweets():
     # Narrow search down to tweets
     # <p class="TweetTextSize TweetTextSize--normal js-tweet-text tweet-text" lang="en" data-aria-label-part="0">
     tweets = souped.find_all("p", class_="TweetTextSize TweetTextSize--normal js-tweet-text tweet-text")
-    file = open("trump.txt", "a+")
+
+    # For each tweet, remove all links and pictures, as well as periods and commas
     for i in tweets:
+        print(i.text)
         result = re.sub(r"http\S+", "", i.text)
         result = re.sub(r"pic\S+", "", result)
-        result = re.sub(".", "", result)
-        result = re.sub(",", "", result)
+        result = result.replace('.', '')
+        result = result.replace(',', '')
         print(result)
         file.write(result + "\n")
     file.close()
@@ -166,4 +186,5 @@ def posttweet(tweet, browser):
     postbutton.click()
     print("Tweet posted!")
 
-main()
+
+scrapeweets("kanye")
