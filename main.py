@@ -36,7 +36,6 @@ textfiledict = {
 
 
 def main():
-
     tweet = None
     loggedin = False
     # Create chrome options to disable notifications
@@ -58,18 +57,25 @@ def main():
             login(browser)
             loggedin = True
         elif navigate == "composetweet":
+            # Present the person with all the people options
             print("Your options are: ")
             for i in range(people.__len__()):
                 print(people[i])
+            # Ask them who they want to impersonate
             person = input("Who would you like to compose as? ")
+            # Compose a tweet using that person's text file
             tweet = composetweet(person.lower())
+            # Print the tweet for the person
             print(tweet)
         elif navigate == "scrape":
+            # Present options
             print("Your options are: ")
             for i in range(people.__len__()):
                 print(people[i])
+            # Get user input
             person = input("Who would you like to scrape? ")
             person = person.lower()
+            # Ensure that selected person is in list
             if person in people:
                 scrapeweets(person)
             else:
@@ -81,24 +87,40 @@ def main():
                 print("You must log in first!")
             # Only if the user is logged in and has a tweet composed, post it
             else:
+                # Present options to user
                 print("Your options are: ")
                 for i in range(people.__len__()):
-                    print(people[i] + ", ")
+                    print(people[i])
+                # Get input from user
                 person = input("Who would you like to tweet as? ")
                 tweet = composetweet(person.lower())
+                # Show the tweet to the user
                 print(tweet)
+                # Create a while loop that runs until the user either declines the tweet, or accepts a tweet
+                # Rerolling does not break the loop so the user can reroll until they are satisfied or change their mind
                 loop = True
                 while loop:
+                    # Ask the user to confirm that the tweet should be sent
+                    # The idea is for each tweet to be proofread so that nothing terrible is said
                     confirmpost = input("Confirm tweet? [y/n/reroll] ")
+                    # If the user approves of the tweet, continue with posting and break the loop
                     if confirmpost in affirmatives:
+                        # Post the tweet
                         posttweet(tweet, browser)
+                        # End the loop
                         loop = False
+                    # The user has elected to generate a new tweet
                     elif confirmpost == "reroll":
+                        # Generate a new tweet using the same person
                         tweet = composetweet(person.lower())
+                        # Show newly generated tweet
                         print(tweet)
+                    # The user has opted not to continue with the post. Breaks the loops and enters back into main loop
                     else:
                         loop = False
+        # Prompt user to make another selection, also giving them a chance to end the loop
         navigate = input("What would you like to do? (login, composetweet, scrape, posttweet) ")
+    # Once the loop ends close the browser
     browser.quit()
 
 
@@ -107,13 +129,13 @@ def login(browser):
         # Send the bot to twitter
         browser.get("https://twitter.com")
 
-        # Login button
+        # Find login button and click
         # <input type="submit" class="EdgeButton EdgeButton--secondary EdgeButton--medium submit js-submit" value="Log in">
         # xpath: //*[@id=\"doc\"]/div/div[1]/div[1]/div[2]/div[2]/div/a[2]
         loginButton = browser.find_element_by_xpath("//*[@id=\"doc\"]/div/div[1]/div[1]/div[2]/div[2]/div/a[2]")
         loginButton.click()
 
-        # Enter username
+        # Find username box and enter username
         # <input class="js-username-field email-input js-initial-focus" type="text" name="session[username_or_email]" autocomplete="on" value="" placeholder="Phone, email or username">
         # browser.find_element_by_css_selector("#page-container > div > div.signin-wrapper > form > fieldset > div:nth-child(2) > input")
         # Using this implementation waits until the item is present before trying to click it
@@ -121,12 +143,12 @@ def login(browser):
         usernamebox.click()
         usernamebox.send_keys(loginInfo.username)
 
-        # Enter password
+        # Find password box and enter password
         passwordbox = browser.find_element_by_xpath("//*[@id=\"page-container\"]/div/div[1]/form/fieldset/div[2]/input")
         passwordbox.click()
         passwordbox.send_keys(loginInfo.password)
 
-        # Click log in
+        # Find and click log in
         # <button type="submit" class="submit EdgeButton EdgeButton--primary EdgeButtom--medium">Log in</button>
         loginButton = browser.find_element_by_xpath("//*[@id=\"page-container\"]/div/div[1]/form/div[2]/button")
         loginButton.click()
@@ -186,9 +208,10 @@ def scrapeweets(person):
     for i in tweets:
         result = re.sub(r"http\S+", "", i.text)
         result = re.sub(r"pic\S+", "", result)
+        result = re.sub(r"@\S+", "", result)
         result = result.replace('.', '')
         result = result.replace(',', '')
-        #print(result)
+        # print(result)
         file.write(result + "\n")
     print("Scrape successful!")
     file.close()
