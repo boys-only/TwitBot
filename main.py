@@ -16,15 +16,24 @@ import requests
 affirmatives = ["yes", "Yes", "y", "Y", "1"]
 negatives = ["No", "no", "N", "n", "0"]
 quitChars = ["q", "Q", "quit", "Quit"]
-people = ["kanye", "trump"]
+people = ["kanye", "trump", "codyko", "noel miller", "spock music", "codynoelspock"]
 profiledict = {
     "trump": "https://twitter.com/realDonaldTrump",
-    "kanye": "https://twitter.com/kanyewest"
+    "kanye": "https://twitter.com/kanyewest",
+    "codyko": "https://twitter.com/codyko",
+    "noel miller": "https://twitter.com/thenoelmiller",
+    "spock music": "https://twitter.com/spockmusic"
+
 }
 textfiledict = {
-     "trump": "trump.txt",
-    "kanye": "kanye.txt"
+    "trump": "trump.txt",
+    "kanye": "kanye.txt",
+    "codyko": "codynoelspock.txt",
+    "noel miller": "codynoelspock.txt",
+    "spock music": "codynoelspock.txt",
+    "codynoelspock": "codynoelspock.txt"
 }
+
 
 def main():
 
@@ -51,12 +60,15 @@ def main():
         elif navigate == "composetweet":
             print("Your options are: ")
             for i in range(people.__len__()):
-                print(people[i] + ", ")
-            person = input("Who would you like to tweet as?")
+                print(people[i])
+            person = input("Who would you like to compose as? ")
             tweet = composetweet(person.lower())
             print(tweet)
         elif navigate == "scrape":
-            person = input("Who would you scrape?: (Trump, Kanye): ")
+            print("Your options are: ")
+            for i in range(people.__len__()):
+                print(people[i])
+            person = input("Who would you like to scrape? ")
             person = person.lower()
             if person in people:
                 scrapeweets(person)
@@ -72,7 +84,7 @@ def main():
                 print("Your options are: ")
                 for i in range(people.__len__()):
                     print(people[i] + ", ")
-                person = input("Who would you like to tweet as?")
+                person = input("Who would you like to tweet as? ")
                 tweet = composetweet(person.lower())
                 print(tweet)
                 loop = True
@@ -172,13 +184,13 @@ def scrapeweets(person):
 
     # For each tweet, remove all links and pictures, as well as periods and commas
     for i in tweets:
-        print(i.text)
         result = re.sub(r"http\S+", "", i.text)
         result = re.sub(r"pic\S+", "", result)
         result = result.replace('.', '')
         result = result.replace(',', '')
-        print(result)
+        #print(result)
         file.write(result + "\n")
+    print("Scrape successful!")
     file.close()
 
 
