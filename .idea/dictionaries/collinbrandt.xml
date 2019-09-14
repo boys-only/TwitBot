@@ -2,6 +2,7 @@
   <dictionary name="collinbrandt">
     <words>
       <w>composetweet</w>
+      <w>confirmpost</w>
       <w>kanye</w>
       <w>loggedin</w>
       <w>passwordbox</w>
@@ -9,6 +10,7 @@
       <w>posttweet</w>
       <w>prefs</w>
       <w>quiter</w>
+      <w>reroll</w>
       <w>scrapetrumptweets</w>
       <w>scrapeweets</w>
       <w>soupfiy</w>

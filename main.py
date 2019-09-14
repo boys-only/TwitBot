@@ -49,7 +49,11 @@ def main():
             login(browser)
             loggedin = True
         elif navigate == "composetweet":
-            tweet = composetweet()
+            print("Your options are: ")
+            for i in range(people.__len__()):
+                print(people[i] + ", ")
+            person = input("Who would you like to tweet as?")
+            tweet = composetweet(person.lower())
             print(tweet)
         elif navigate == "scrape":
             person = input("Who would you scrape?: (Trump, Kanye): ")
@@ -73,12 +77,12 @@ def main():
                 print(tweet)
                 loop = True
                 while loop:
-                    confirmpost = input("Confirm tweet? [y/n] ")
+                    confirmpost = input("Confirm tweet? [y/n/reroll] ")
                     if confirmpost in affirmatives:
                         posttweet(tweet, browser)
                         loop = False
                     elif confirmpost == "reroll":
-                        tweet = composetweet()
+                        tweet = composetweet(person.lower())
                         print(tweet)
                     else:
                         loop = False
