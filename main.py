@@ -11,13 +11,23 @@ import re
 from bs4 import BeautifulSoup
 import requests
 
+# Just global lists
+# Affirmatives and negatives for prompts
+affirmatives = ["yes", "Yes", "y", "Y", "1"]
+negatives = ["No", "no", "N", "n", "0"]
+quitChars = ["q", "Q", "quit", "Quit"]
+people = ["kanye", "trump"]
+profiledict = {
+    "trump": "https://twitter.com/realDonaldTrump",
+    "kanye": "https://twitter.com/kanyewest"
+}
+textfiledict = {
+     "trump": "trump.txt",
+    "kanye": "kanye.txt"
+}
 
 def main():
-    # Affirmatives and negatives for prompts
-    affirmatives = ["yes", "Yes", "y", "Y", "1"]
-    negatives = ["No", "no", "N", "n", "0"]
-    quitChars = ["q", "Q", "quit", "Quit"]
-    people = ["kanye", "trump"]
+
     tweet = None
     loggedin = False
     # Create chrome options to disable notifications
@@ -55,8 +65,11 @@ def main():
                 print("You must log in first!")
             # Only if the user is logged in and has a tweet composed, post it
             else:
-
-                tweet = composetweet()
+                print("Your options are: ")
+                for i in range(people.__len__()):
+                    print(people[i] + ", ")
+                person = input("Who would you like to tweet as?")
+                tweet = composetweet(person.lower())
                 print(tweet)
                 loop = True
                 while loop:
@@ -108,9 +121,9 @@ def login(browser):
         print("Element not found")
 
 
-def composetweet():
+def composetweet(person):
     # Open the text file
-    file = open("trump.txt", "r")
+    file = open(textfiledict.get(person), "r")
     # Construct a markov with the file
     mark = markov.Markov(file)
     # Create the map of the words
@@ -142,18 +155,9 @@ def composetweet():
 
 
 def scrapeweets(person):
-    # Decide which persons tweets to scrape
-    if person == "trump":
-        # Request DT's twitter page
-        page = requests.get("https://twitter.com/realDonaldTrump")
-        # Open Trump's file
-        file = open("trump.txt", "a+")
-    elif person == "kanye":
-        # Request Kanye's twitter page
-        page = requests.get("https://twitter.com/kanyewest")
-        # Open kanye's file
-        file = open("kanye.txt", "a+")
-
+    # Set the page to scrape and file to write to using the dictionaries
+    page = requests.get(profiledict.get(person))
+    file = open(textfiledict.get(person), "a+")
 
     # Soupfiy it
     souped = BeautifulSoup(page.text, 'html.parser')
@@ -187,4 +191,4 @@ def posttweet(tweet, browser):
     print("Tweet posted!")
 
 
-scrapeweets("kanye")
+main()
