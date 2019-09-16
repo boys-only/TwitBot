@@ -43,6 +43,8 @@ tweetsizedict = {
 }
 
 
+# Main while loop that handles user inputs
+# Makes calls to other functions based on user inputs
 def main():
     loggedin = False
     # Create chrome options to disable notifications
@@ -134,6 +136,7 @@ def main():
     browser.quit()
 
 
+# Logs to bot into twitter on google chrome
 def login(browser):
     try:
         # Send the bot to twitter
@@ -169,6 +172,7 @@ def login(browser):
         print("Element not found")
 
 
+# Composes a tweet based on the users preferred person and size
 def composetweet(person, size):
     # Open the text file
     file = open(textfiledict.get(person), "r")
@@ -203,6 +207,7 @@ def composetweet(person, size):
                 return text.lower()
 
 
+# Updates the text files for the given person by scraping tweets from there twitter
 def scrapeweets(person):
     # Set the page to scrape and file to write to using the dictionaries
     page = requests.get(profiledict.get(person))
@@ -228,6 +233,7 @@ def scrapeweets(person):
     file.close()
 
 
+# Posts a composed tweet to the bots twitter account
 def posttweet(tweet, browser):
     # XPATH for draft box
     # //*[@id="react-root"]/div/div/div/main/div/div/div/div[1]/div/div[2]/div[2]/div[1]/div/div/div[2]/div[1]/div/div/div/div/div/div/div/div/div[1]/div/div/div/div[2]/div
