@@ -36,6 +36,11 @@ textfiledict = {
     "spock music": "codynoelspock.txt",
     "codynoelspock": "codynoelspock.txt"
 }
+tweetsizedict = {
+    "s": 17,
+    "m": 27,
+    "l": 35
+}
 
 
 def main():
@@ -54,6 +59,7 @@ def main():
     # The user can use the console to to various things
     navigate = input("What would you like to do? (login, composetweet, scrape, posttweet) ")
     navigate = navigate.lower()
+    # Loop runs until user opts to quit
     while navigate not in quitChars:
         if navigate == "login":
             login(browser)
@@ -65,8 +71,9 @@ def main():
                 print(people[i])
             # Ask them who they want to impersonate
             person = input("Who would you like to compose as? ")
+            size = input("Tweet size? [s/m/l]")
             # Compose a tweet using that person's text file
-            tweet = composetweet(person.lower())
+            tweet = composetweet(person.lower(),size)
             # Print the tweet for the person
             print(tweet)
         elif navigate == "scrape":
@@ -95,7 +102,8 @@ def main():
                     print(people[i])
                 # Get input from user
                 person = input("Who would you like to tweet as? ")
-                tweet = composetweet(person.lower())
+                size = input("Tweet size? [s/m/l]")
+                tweet = composetweet(person.lower(), size)
                 # Show the tweet to the user
                 print(tweet)
                 # Create a while loop that runs until the user either declines the tweet, or accepts a tweet
@@ -161,7 +169,7 @@ def login(browser):
         print("Element not found")
 
 
-def composetweet(person):
+def composetweet(person, size):
     # Open the text file
     file = open(textfiledict.get(person), "r")
     # Construct a markov with the file
@@ -171,7 +179,7 @@ def composetweet(person):
     mark.triples()
     mark.database()
     # Generate a markov text
-    text = mark.generate_markov_text()
+    text = mark.generate_markov_text(tweetsizedict.get(size))
     # print("First try \n", text + "\nTweet length: ", len(text))
     if len(text) < 280:
         print("Tweet composed!")
