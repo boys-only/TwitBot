@@ -15,8 +15,11 @@ import requests
 # Affirmatives and negatives for prompts
 affirmatives = ["yes", "Yes", "y", "Y", "1"]
 negatives = ["No", "no", "N", "n", "0"]
+# Inputs to quit
 quitChars = ["q", "Q", "quit", "Quit"]
+# List of people
 people = ["kanye", "trump", "codyko", "noel miller", "spock music", "codynoelspock"]
+# Maps of people and their respective twitter links and text files
 profiledict = {
     "trump": "https://twitter.com/realDonaldTrump",
     "kanye": "https://twitter.com/kanyewest",
@@ -36,7 +39,6 @@ textfiledict = {
 
 
 def main():
-    tweet = None
     loggedin = False
     # Create chrome options to disable notifications
     chrome_options = webdriver.ChromeOptions()
@@ -175,6 +177,7 @@ def composetweet(person):
         print("Tweet composed!")
         text = text.replace('.', '')
         text = text.replace(',', '')
+        text = text.replace("tickets on sale", "")
         return text.lower()
     else:
         # While the text is longer than 280 chars, keep generating new texts
