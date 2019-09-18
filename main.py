@@ -196,13 +196,6 @@ def scrapeweets():
 
 # Posts a composed tweet to the bots twitter account
 def posttweet(browser):
-    # Present options to user
-    print("Your options are: ")
-    for i in range(people.__len__()):
-        print(people[i])
-    # Get input from user
-    person = input("Who would you like to tweet as? ")
-    size = input("Tweet size? [s/m/l] ")
     tweet = composetweet()
     # Show the tweet to the user
     print(tweet)
@@ -233,13 +226,12 @@ def posttweet(browser):
         # The user has elected to generate a new tweet
         elif confirmpost == "reroll":
             # Generate a new tweet using the same person
-            tweet = composetweet(person.lower(), size)
+            tweet = composetweet()
             # Show newly generated tweet
             print(tweet)
         # The user has opted not to continue with the post. Breaks the loops and enters back into main loop
         else:
             loop = False
-
 
 
 # Filters out periods, commas, links and other things
@@ -252,6 +244,16 @@ def filtertext(tweet):
     # This one is for you cody/noel
     result = result.replace("tickets on sale", "")
     return result
+
+
+def getperson():
+    # TODO Function that gets person from user input
+    pass
+
+
+def gettweetsize():
+    # TODO Function that gets desired size of tweet from user
+    pass
 
 
 main()
