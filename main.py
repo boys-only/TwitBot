@@ -66,20 +66,11 @@ def main():
             login(browser)
             loggedin = True
         elif navigate == "composetweet":
-            # Present the person with all the people options
-            print("Your options are: ")
-            for i in range(people.__len__()):
-                print(people[i])
-            # Ask them who they want to impersonate
-            person = input("Who would you like to compose as? ")
-            size = input("Tweet size? [s/m/l] ")
-            # Compose a tweet using that person's text file
-            tweet = composetweet(person.lower(),size)
+            tweet = composetweet()
             # Print the tweet for the person
             print(tweet)
         elif navigate == "scrape":
             scrapeweets()
-
         # Ensure the user has logged in and a tweet has been composed first
         elif navigate == "posttweet":
             # Make sure the user is logged in
@@ -131,7 +122,15 @@ def login(browser):
 
 
 # Composes a tweet based on the users preferred person and size
-def composetweet(person, size):
+def composetweet():
+    # Present the person with all the people options
+    print("Your options are: ")
+    for i in range(people.__len__()):
+        print(people[i])
+    # Ask them who they want to impersonate
+    person = input("Who would you like to compose as? ")
+    size = input("Tweet size? [s/m/l] ")
+    # Compose a tweet using that person's text file
     # Open the text file
     file = open(textfiledict.get(person), "r")
     # Construct a markov with the file
@@ -195,7 +194,6 @@ def scrapeweets():
         print("Sorry, I can't scrape that person")
 
 
-
 # Posts a composed tweet to the bots twitter account
 def posttweet(browser):
     # Present options to user
@@ -205,7 +203,7 @@ def posttweet(browser):
     # Get input from user
     person = input("Who would you like to tweet as? ")
     size = input("Tweet size? [s/m/l] ")
-    tweet = composetweet(person.lower(), size)
+    tweet = composetweet()
     # Show the tweet to the user
     print(tweet)
     # Create a while loop that runs until the user either declines the tweet, or accepts a tweet
