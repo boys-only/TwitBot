@@ -3,9 +3,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium import common
-from selenium.webdriver.common.keys import Keys
+# from selenium.webdriver.common.keys import Keys
 import loginInfo
-import time
 import markov
 import re
 from bs4 import BeautifulSoup
@@ -67,30 +66,11 @@ def main():
             login(browser)
             loggedin = True
         elif navigate == "composetweet":
-            # Present the person with all the people options
-            print("Your options are: ")
-            for i in range(people.__len__()):
-                print(people[i])
-            # Ask them who they want to impersonate
-            person = input("Who would you like to compose as? ")
-            size = input("Tweet size? [s/m/l] ")
-            # Compose a tweet using that person's text file
-            tweet = composetweet(person.lower(),size)
+            tweet = composetweet()
             # Print the tweet for the person
             print(tweet)
         elif navigate == "scrape":
-            # Present options
-            print("Your options are: ")
-            for i in range(people.__len__()):
-                print(people[i])
-            # Get user input
-            person = input("Who would you like to scrape? ")
-            person = person.lower()
-            # Ensure that selected person is in list
-            if person in people:
-                scrapeweets(person)
-            else:
-                print("Sorry, I can't scrape that person")
+            scrapeweets()
         # Ensure the user has logged in and a tweet has been composed first
         elif navigate == "posttweet":
             # Make sure the user is logged in
@@ -98,38 +78,7 @@ def main():
                 print("You must log in first!")
             # Only if the user is logged in and has a tweet composed, post it
             else:
-                # Present options to user
-                print("Your options are: ")
-                for i in range(people.__len__()):
-                    print(people[i])
-                # Get input from user
-                person = input("Who would you like to tweet as? ")
-                size = input("Tweet size? [s/m/l] ")
-                tweet = composetweet(person.lower(), size)
-                # Show the tweet to the user
-                print(tweet)
-                # Create a while loop that runs until the user either declines the tweet, or accepts a tweet
-                # Rerolling does not break the loop so the user can reroll until they are satisfied or change their mind
-                loop = True
-                while loop:
-                    # Ask the user to confirm that the tweet should be sent
-                    # The idea is for each tweet to be proofread so that nothing terrible is said
-                    confirmpost = input("Confirm tweet? [y/n/reroll] ")
-                    # If the user approves of the tweet, continue with posting and break the loop
-                    if confirmpost in affirmatives:
-                        # Post the tweet
-                        posttweet(tweet, browser)
-                        # End the loop
-                        loop = False
-                    # The user has elected to generate a new tweet
-                    elif confirmpost == "reroll":
-                        # Generate a new tweet using the same person
-                        tweet = composetweet(person.lower())
-                        # Show newly generated tweet
-                        print(tweet)
-                    # The user has opted not to continue with the post. Breaks the loops and enters back into main loop
-                    else:
-                        loop = False
+                posttweet(browser)
         # Prompt user to make another selection, also giving them a chance to end the loop
         navigate = input("What would you like to do? (login, composetweet, scrape, posttweet) ")
     # Once the loop ends close the browser
@@ -173,7 +122,15 @@ def login(browser):
 
 
 # Composes a tweet based on the users preferred person and size
-def composetweet(person, size):
+def composetweet():
+    # Present the person with all the people options
+    print("Your options are: ")
+    for i in range(people.__len__()):
+        print(people[i])
+    # Ask them who they want to impersonate
+    person = input("Who would you like to compose as? ")
+    size = input("Tweet size? [s/m/l] ")
+    # Compose a tweet using that person's text file
     # Open the text file
     file = open(textfiledict.get(person), "r")
     # Construct a markov with the file
@@ -205,39 +162,84 @@ def composetweet(person, size):
 
 
 # Updates the text files for the given person by scraping tweets from there twitter
-def scrapeweets(person):
-    # Set the page to scrape and file to write to using the dictionaries
-    page = requests.get(profiledict.get(person))
-    file = open(textfiledict.get(person), "a+")
+def scrapeweets():
+    # Present options
+    print("Your options are: ")
+    for i in range(people.__len__()):
+        print(people[i])
+    # Get user input
+    person = input("Who would you like to scrape? ")
+    person = person.lower()
+    # Ensure that selected person is in list
+    if person in people:
+        # Set the page to scrape and file to write to using the dictionaries
+        page = requests.get(profiledict.get(person))
+        file = open(textfiledict.get(person), "a+")
 
-    # Soupfiy it
-    souped = BeautifulSoup(page.text, 'html.parser')
+        # Soupfiy it
+        souped = BeautifulSoup(page.text, 'html.parser')
 
-    # Narrow search down to tweets
-    # <p class="TweetTextSize TweetTextSize--normal js-tweet-text tweet-text" lang="en" data-aria-label-part="0">
-    tweets = souped.find_all("p", class_="TweetTextSize TweetTextSize--normal js-tweet-text tweet-text")
+        # Narrow search down to tweets
+        # <p class="TweetTextSize TweetTextSize--normal js-tweet-text tweet-text" lang="en" data-aria-label-part="0">
+        tweets = souped.find_all("p", class_="TweetTextSize TweetTextSize--normal js-tweet-text tweet-text")
 
-    # For each tweet, remove all links and pictures, as well as periods and commas
-    for i in tweets:
-        result = filtertext(i.text)
-        # print(result)
-        file.write(result + "\n")
-    print("Scrape successful!")
-    file.close()
+        # For each tweet, remove all links and pictures, as well as periods and commas
+        for i in tweets:
+            result = filtertext(i.text)
+            # print(result)
+            file.write(result + "\n")
+        print("Scrape successful!")
+        file.close()
+    else:
+        print("Sorry, I can't scrape that person")
 
 
 # Posts a composed tweet to the bots twitter account
-def posttweet(tweet, browser):
-    # XPATH for draft box
-    # //*[@id="react-root"]/div/div/div/main/div/div/div/div[1]/div/div[2]/div[2]/div[1]/div/div/div[2]/div[1]/div/div/div/div/div/div/div/div/div[1]/div/div/div/div[2]/div
-    draft = browser.find_element_by_xpath("//*[@id=\"react-root\"]/div/div/div/main/div/div/div/div[1]/div/div[2]/div[2]/div[1]/div/div/div[2]/div[1]/div/div/div/div/div/div/div/div/div[1]/div/div/div/div[2]/div")
-    draft.send_keys(tweet)
+def posttweet(browser):
+    # Present options to user
+    print("Your options are: ")
+    for i in range(people.__len__()):
+        print(people[i])
+    # Get input from user
+    person = input("Who would you like to tweet as? ")
+    size = input("Tweet size? [s/m/l] ")
+    tweet = composetweet()
+    # Show the tweet to the user
+    print(tweet)
+    # Create a while loop that runs until the user either declines the tweet, or accepts a tweet
+    # Rerolling does not break the loop so the user can reroll until they are satisfied or change their mind
+    loop = True
+    while loop:
+        # Ask the user to confirm that the tweet should be sent
+        # The idea is for each tweet to be proofread so that nothing terrible is said
+        confirmpost = input("Confirm tweet? [y/n/reroll] ")
+        # If the user approves of the tweet, continue with posting and break the loop
+        if confirmpost in affirmatives:
+            # Post the tweet
+            # XPATH for draft box
+            # //*[@id="react-root"]/div/div/div/main/div/div/div/div[1]/div/div[2]/div[2]/div[1]/div/div/div[2]/div[1]/div/div/div/div/div/div/div/div/div[1]/div/div/div/div[2]/div
+            draft = browser.find_element_by_xpath(
+                "//*[@id=\"react-root\"]/div/div/div/main/div/div/div/div[1]/div/div[2]/div[2]/div[1]/div/div/div[2]/div[1]/div/div/div/div/div/div/div/div/div[1]/div/div/div/div[2]/div")
+            draft.send_keys(tweet)
 
-    # Post button xpath
-    # //*[@id="react-root"]/div/div/div/main/div/div/div/div[1]/div/div[2]/div[2]/div[1]/div/div/div[2]/div[2]/div/div/div[2]/div[3]/div/span/span
-    postbutton = browser.find_element_by_xpath("//*[@id=\"react-root\"]/div/div/div/main/div/div/div/div[1]/div/div[2]/div[2]/div[1]/div/div/div[2]/div[2]/div/div/div[2]/div[3]/div/span/span")
-    postbutton.click()
-    print("Tweet posted!")
+            # Post button xpath
+            # //*[@id="react-root"]/div/div/div/main/div/div/div/div[1]/div/div[2]/div[2]/div[1]/div/div/div[2]/div[2]/div/div/div[2]/div[3]/div/span/span
+            postbutton = browser.find_element_by_xpath(
+                "//*[@id=\"react-root\"]/div/div/div/main/div/div/div/div[1]/div/div[2]/div[2]/div[1]/div/div/div[2]/div[2]/div/div/div[2]/div[3]/div/span/span")
+            postbutton.click()
+            print("Tweet posted!")
+            # End the loop
+            loop = False
+        # The user has elected to generate a new tweet
+        elif confirmpost == "reroll":
+            # Generate a new tweet using the same person
+            tweet = composetweet(person.lower(), size)
+            # Show newly generated tweet
+            print(tweet)
+        # The user has opted not to continue with the post. Breaks the loops and enters back into main loop
+        else:
+            loop = False
+
 
 
 # Filters out periods, commas, links and other things
