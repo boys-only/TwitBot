@@ -73,7 +73,7 @@ def main():
                 print(people[i])
             # Ask them who they want to impersonate
             person = input("Who would you like to compose as? ")
-            size = input("Tweet size? [s/m/l]")
+            size = input("Tweet size? [s/m/l] ")
             # Compose a tweet using that person's text file
             tweet = composetweet(person.lower(),size)
             # Print the tweet for the person
@@ -104,7 +104,7 @@ def main():
                     print(people[i])
                 # Get input from user
                 person = input("Who would you like to tweet as? ")
-                size = input("Tweet size? [s/m/l]")
+                size = input("Tweet size? [s/m/l] ")
                 tweet = composetweet(person.lower(), size)
                 # Show the tweet to the user
                 print(tweet)
@@ -187,9 +187,7 @@ def composetweet(person, size):
     # print("First try \n", text + "\nTweet length: ", len(text))
     if len(text) < 280:
         print("Tweet composed!")
-        text = text.replace('.', '')
-        text = text.replace(',', '')
-        text = text.replace("tickets on sale", "")
+        text = filtertext(text)
         return text.lower()
     else:
         # While the text is longer than 280 chars, keep generating new texts
@@ -202,8 +200,7 @@ def composetweet(person, size):
                 # print(text + "\nTweet length: ", len(text))
                 file.close()
                 print("Tweet composed!")
-                text = text.replace('.', '')
-                text = text.replace(',', '')
+                text = filtertext(text)
                 return text.lower()
 
 
@@ -222,11 +219,7 @@ def scrapeweets(person):
 
     # For each tweet, remove all links and pictures, as well as periods and commas
     for i in tweets:
-        result = re.sub(r"http\S+", "", i.text)
-        result = re.sub(r"pic\S+", "", result)
-        result = re.sub(r"@\S+", "", result)
-        result = result.replace('.', '')
-        result = result.replace(',', '')
+        result = filtertext(i.text)
         # print(result)
         file.write(result + "\n")
     print("Scrape successful!")
@@ -245,6 +238,18 @@ def posttweet(tweet, browser):
     postbutton = browser.find_element_by_xpath("//*[@id=\"react-root\"]/div/div/div/main/div/div/div/div[1]/div/div[2]/div[2]/div[1]/div/div/div[2]/div[2]/div/div/div[2]/div[3]/div/span/span")
     postbutton.click()
     print("Tweet posted!")
+
+
+# Filters out periods, commas, links and other things
+def filtertext(tweet):
+    result = re.sub(r"http\S+", "", tweet)
+    result = re.sub(r"pic\S+", "", result)
+    result = re.sub(r"@\S+", "", result)
+    result = result.replace('.', '')
+    result = result.replace(',', '')
+    # This one is for you cody/noel
+    result = result.replace("tickets on sale", "")
+    return result
 
 
 main()
