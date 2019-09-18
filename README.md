@@ -1,5 +1,5 @@
 # TwitBot
-This fella will be a bot that tweets
+This fella is a bot that tweets using words that people have said.
 
 
 --Drivers-- 
