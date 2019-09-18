@@ -78,18 +78,8 @@ def main():
             # Print the tweet for the person
             print(tweet)
         elif navigate == "scrape":
-            # Present options
-            print("Your options are: ")
-            for i in range(people.__len__()):
-                print(people[i])
-            # Get user input
-            person = input("Who would you like to scrape? ")
-            person = person.lower()
-            # Ensure that selected person is in list
-            if person in people:
-                scrapeweets(person)
-            else:
-                print("Sorry, I can't scrape that person")
+            scrapeweets()
+
         # Ensure the user has logged in and a tweet has been composed first
         elif navigate == "posttweet":
             # Make sure the user is logged in
@@ -173,25 +163,37 @@ def composetweet(person, size):
 
 
 # Updates the text files for the given person by scraping tweets from there twitter
-def scrapeweets(person):
-    # Set the page to scrape and file to write to using the dictionaries
-    page = requests.get(profiledict.get(person))
-    file = open(textfiledict.get(person), "a+")
+def scrapeweets():
+    # Present options
+    print("Your options are: ")
+    for i in range(people.__len__()):
+        print(people[i])
+    # Get user input
+    person = input("Who would you like to scrape? ")
+    person = person.lower()
+    # Ensure that selected person is in list
+    if person in people:
+        # Set the page to scrape and file to write to using the dictionaries
+        page = requests.get(profiledict.get(person))
+        file = open(textfiledict.get(person), "a+")
 
-    # Soupfiy it
-    souped = BeautifulSoup(page.text, 'html.parser')
+        # Soupfiy it
+        souped = BeautifulSoup(page.text, 'html.parser')
 
-    # Narrow search down to tweets
-    # <p class="TweetTextSize TweetTextSize--normal js-tweet-text tweet-text" lang="en" data-aria-label-part="0">
-    tweets = souped.find_all("p", class_="TweetTextSize TweetTextSize--normal js-tweet-text tweet-text")
+        # Narrow search down to tweets
+        # <p class="TweetTextSize TweetTextSize--normal js-tweet-text tweet-text" lang="en" data-aria-label-part="0">
+        tweets = souped.find_all("p", class_="TweetTextSize TweetTextSize--normal js-tweet-text tweet-text")
 
-    # For each tweet, remove all links and pictures, as well as periods and commas
-    for i in tweets:
-        result = filtertext(i.text)
-        # print(result)
-        file.write(result + "\n")
-    print("Scrape successful!")
-    file.close()
+        # For each tweet, remove all links and pictures, as well as periods and commas
+        for i in tweets:
+            result = filtertext(i.text)
+            # print(result)
+            file.write(result + "\n")
+        print("Scrape successful!")
+        file.close()
+    else:
+        print("Sorry, I can't scrape that person")
+
 
 
 # Posts a composed tweet to the bots twitter account
