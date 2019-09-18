@@ -3,9 +3,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium import common
-from selenium.webdriver.common.keys import Keys
+# from selenium.webdriver.common.keys import Keys
 import loginInfo
-import time
 import markov
 import re
 from bs4 import BeautifulSoup
@@ -124,7 +123,7 @@ def main():
                     # The user has elected to generate a new tweet
                     elif confirmpost == "reroll":
                         # Generate a new tweet using the same person
-                        tweet = composetweet(person.lower())
+                        tweet = composetweet(person.lower(), size)
                         # Show newly generated tweet
                         print(tweet)
                     # The user has opted not to continue with the post. Breaks the loops and enters back into main loop
