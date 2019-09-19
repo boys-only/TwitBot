@@ -123,9 +123,13 @@ def login(browser):
 
 # Composes a tweet based on the users preferred person and size
 def composetweet():
+    # Prompt user for desired person
     person = getperson()
+    # Make sure the user isn't trying to tweet as everyone
+    # I can do this in the future
     if person == "all":
         return "Sorry I can't tweet from everyone. Maybe in the future."
+    # Prompt user for desired size of tweet
     size = input("Tweet size? [s/m/l] ")
     # Compose a tweet using that person's text file
     # Open the text file
@@ -177,9 +181,10 @@ def scrapeweets():
 
         # For each tweet, remove all links and pictures, as well as periods and commas
         for i in tweets:
+            # Filter the tweet
             result = filtertext(i.text)
+            # If the tweet isn't not already in the file write it
             if not checkforduplicates(person, result):
-                result = filtertext(result)
                 file.write(result + "\n")
 
         print("Scrape successful!")
@@ -204,7 +209,6 @@ def scrapeweets():
             for j in tweets:
                 result = filtertext(j.text)
                 if not checkforduplicates(person, result):
-                    result = filtertext(result)
                     file.write(result + "\n")
 
             print("Scrape successful!")
@@ -263,6 +267,7 @@ def filtertext(tweet):
     return result
 
 
+# Gets person from user input
 def getperson():
     # TODO Function that gets person from user input
     # Present options
@@ -275,11 +280,14 @@ def getperson():
     return person
 
 
+# Gets tweet size from user input
 def gettweetsize():
     # TODO Function that gets desired size of tweet from user
     pass
 
 
+# Checks text files for duplications from scraped tweets
+# Returns true if a tweet is already in the file
 def checkforduplicates(person, text):
     # Check the person's file for the current tweet
     with open(textfiledict.get(person)) as file:
