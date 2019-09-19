@@ -123,12 +123,7 @@ def login(browser):
 
 # Composes a tweet based on the users preferred person and size
 def composetweet():
-    # Present the person with all the people options
-    print("Your options are: ")
-    for i in range(people.__len__()):
-        print(people[i])
-    # Ask them who they want to impersonate
-    person = input("Who would you like to compose as? ")
+    person = getperson()
     size = input("Tweet size? [s/m/l] ")
     # Compose a tweet using that person's text file
     # Open the text file
@@ -163,13 +158,8 @@ def composetweet():
 
 # Updates the text files for the given person by scraping tweets from there twitter
 def scrapeweets():
-    # Present options
-    print("Your options are: ")
-    for i in range(people.__len__()):
-        print(people[i])
-    # Get user input
-    person = input("Who would you like to scrape? ")
-    person = person.lower()
+    # Get person
+    person = getperson()
     # Ensure that selected person is in list
     if person in people:
         # Set the page to scrape and file to write to using the dictionaries
@@ -186,7 +176,7 @@ def scrapeweets():
         # For each tweet, remove all links and pictures, as well as periods and commas
         for i in tweets:
             result = filtertext(i.text)
-            # print(result)
+
             file.write(result + "\n")
         print("Scrape successful!")
         file.close()
@@ -211,14 +201,12 @@ def posttweet(browser):
             # Post the tweet
             # XPATH for draft box
             # //*[@id="react-root"]/div/div/div/main/div/div/div/div[1]/div/div[2]/div[2]/div[1]/div/div/div[2]/div[1]/div/div/div/div/div/div/div/div/div[1]/div/div/div/div[2]/div
-            draft = browser.find_element_by_xpath(
-                "//*[@id=\"react-root\"]/div/div/div/main/div/div/div/div[1]/div/div[2]/div[2]/div[1]/div/div/div[2]/div[1]/div/div/div/div/div/div/div/div/div[1]/div/div/div/div[2]/div")
+            draft = browser.find_element_by_xpath("//*[@id=\"react-root\"]/div/div/div/main/div/div/div/div[1]/div/div[2]/div[2]/div[1]/div/div/div[2]/div[1]/div/div/div/div/div/div/div/div/div[1]/div/div/div/div[2]/div")
             draft.send_keys(tweet)
 
             # Post button xpath
             # //*[@id="react-root"]/div/div/div/main/div/div/div/div[1]/div/div[2]/div[2]/div[1]/div/div/div[2]/div[2]/div/div/div[2]/div[3]/div/span/span
-            postbutton = browser.find_element_by_xpath(
-                "//*[@id=\"react-root\"]/div/div/div/main/div/div/div/div[1]/div/div[2]/div[2]/div[1]/div/div/div[2]/div[2]/div/div/div[2]/div[3]/div/span/span")
+            postbutton = browser.find_element_by_xpath("//*[@id=\"react-root\"]/div/div/div/main/div/div/div/div[1]/div/div[2]/div[2]/div[1]/div/div/div[2]/div[2]/div/div/div[2]/div[3]/div/span/span")
             postbutton.click()
             print("Tweet posted!")
             # End the loop
@@ -248,7 +236,14 @@ def filtertext(tweet):
 
 def getperson():
     # TODO Function that gets person from user input
-    pass
+    # Present options
+    print("Your options are: ")
+    for i in range(people.__len__()):
+        print(people[i])
+    # Get user input
+    person = input("Which person would you like to select? ")
+    person = person.lower()
+    return person
 
 
 def gettweetsize():
