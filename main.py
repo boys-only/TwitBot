@@ -176,8 +176,9 @@ def scrapeweets():
         # For each tweet, remove all links and pictures, as well as periods and commas
         for i in tweets:
             result = filtertext(i.text)
+            if not checkforduplicates(person, result):
+                file.write(result + "\n")
 
-            file.write(result + "\n")
         print("Scrape successful!")
         file.close()
     else:
@@ -249,6 +250,17 @@ def getperson():
 def gettweetsize():
     # TODO Function that gets desired size of tweet from user
     pass
+
+
+def checkforduplicates(person, text):
+    # Check the person's file for the current tweet
+    with open(textfiledict.get(person)) as file:
+        filelines = file.readlines()
+    for line in filelines:
+        if text in line:
+            print("Duplicate Found")
+            return True
+    return False
 
 
 main()
