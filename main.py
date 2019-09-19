@@ -17,7 +17,7 @@ negatives = ["No", "no", "N", "n", "0"]
 # Inputs to quit
 quitChars = ["q", "Q", "quit", "Quit"]
 # List of people
-people = ["kanye", "trump", "codyko", "noel miller", "spock music", "codynoelspock"]
+people = ["kanye", "trump", "codyko", "noel miller", "spock music", "codynoelspock", "all"]
 # Maps of people and their respective twitter links and text files
 profiledict = {
     "trump": "https://twitter.com/realDonaldTrump",
@@ -124,6 +124,8 @@ def login(browser):
 # Composes a tweet based on the users preferred person and size
 def composetweet():
     person = getperson()
+    if person == "all":
+        return "Sorry I can't tweet from everyone. Maybe in the future."
     size = input("Tweet size? [s/m/l] ")
     # Compose a tweet using that person's text file
     # Open the text file
@@ -160,8 +162,8 @@ def composetweet():
 def scrapeweets():
     # Get person
     person = getperson()
-    # Ensure that selected person is in list
-    if person in people:
+    # Ensure that selected person is in list and is not everyone on that list
+    if (person in people) and person != "all":
         # Set the page to scrape and file to write to using the dictionaries
         page = requests.get(profiledict.get(person))
         file = open(textfiledict.get(person), "a+")
@@ -177,10 +179,36 @@ def scrapeweets():
         for i in tweets:
             result = filtertext(i.text)
             if not checkforduplicates(person, result):
+                result = filtertext(result)
                 file.write(result + "\n")
 
         print("Scrape successful!")
         file.close()
+    # Scrape every person
+    elif person == "all":
+        # Go through the list of people
+        for i in range(people.__len__() - 2):
+            person = people[i]
+            # Set the page to scrape and file to write to using the dictionaries
+            page = requests.get(profiledict.get(person))
+            file = open(textfiledict.get(person), "a+")
+
+            # Soupfiy it
+            souped = BeautifulSoup(page.text, 'html.parser')
+
+            # Narrow search down to tweets
+            # <p class="TweetTextSize TweetTextSize--normal js-tweet-text tweet-text" lang="en" data-aria-label-part="0">
+            tweets = souped.find_all("p", class_="TweetTextSize TweetTextSize--normal js-tweet-text tweet-text")
+
+            # For each tweet, remove all links and pictures, as well as periods and commas
+            for j in tweets:
+                result = filtertext(j.text)
+                if not checkforduplicates(person, result):
+                    result = filtertext(result)
+                    file.write(result + "\n")
+
+            print("Scrape successful!")
+            file.close()
     else:
         print("Sorry, I can't scrape that person")
 
