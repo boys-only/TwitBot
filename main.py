@@ -17,23 +17,24 @@ negatives = ["No", "no", "N", "n", "0"]
 # Inputs to quit
 quitChars = ["q", "Q", "quit", "Quit"]
 # List of people
-people = ["kanye", "trump", "codyko", "noel miller", "spock music", "codynoelspock", "all"]
+people = ["kanye", "trump", "codyko", "noel miller", "spock music", "codynoelspock", "dril", "all"]
 # Maps of people and their respective twitter links and text files
 profiledict = {
     "trump": "https://twitter.com/realDonaldTrump",
     "kanye": "https://twitter.com/kanyewest",
     "codyko": "https://twitter.com/codyko",
     "noel miller": "https://twitter.com/thenoelmiller",
-    "spock music": "https://twitter.com/spockmusic"
-
+    "spock music": "https://twitter.com/spockmusic",
+    "dril": "https://twitter.com/dril"
 }
 textfiledict = {
-    "trump": "trump.txt",
-    "kanye": "kanye.txt",
-    "codyko": "codynoelspock.txt",
-    "noel miller": "codynoelspock.txt",
-    "spock music": "codynoelspock.txt",
-    "codynoelspock": "codynoelspock.txt"
+    "trump": "./textfiles/trump.txt",
+    "kanye": "./textfiles/kanye.txt",
+    "codyko": "./textfiles/codynoelspock.txt",
+    "noel miller": "./textfiles/codynoelspock.txt",
+    "spock music": "./textfiles/codynoelspock.txt",
+    "codynoelspock": "./textfiles/codynoelspock.txt",
+    "dril": "./textfiles/dril.txt"
 }
 tweetsizedict = {
     "s": 17,
@@ -85,10 +86,8 @@ def main():
 
     finally:
         # Once the loop ends close the browser
-        if browser != None:
+        if browser is not None:
             browser.quit()
-
-
 
 
 # Logs to bot into twitter on google chrome
