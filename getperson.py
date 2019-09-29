@@ -1,4 +1,4 @@
-import people
+from listsanddicts import people
 
 
 # Gets person from user input

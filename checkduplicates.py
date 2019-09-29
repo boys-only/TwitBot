@@ -1,4 +1,4 @@
-import textfiledict
+from listsanddicts import textfiledict
 
 
 # Checks text files for duplications from scraped tweets

@@ -1,5 +1,5 @@
 import composetweet
-import yesandno
+from listsanddicts import yesandno
 
 
 # Posts a composed tweet to the bots twitter account

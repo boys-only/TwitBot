@@ -1,8 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
-import textfiledict
-import profiledict
-import people
+from listsanddicts import textfiledict, profiledict, people
 import getperson
 import filtertext
 import checkduplicates

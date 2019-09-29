@@ -1,7 +1,6 @@
 import markov
 import getperson
-import textfiledict
-import sizedict
+from listsanddicts import textfiledict, sizedict
 import filtertext
 
 
