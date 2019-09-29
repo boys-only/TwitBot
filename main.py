@@ -44,7 +44,14 @@ def main():
                 else:
                     posttweet.posttweet(browser)
             elif navigate == "gowild":
-                gowild.gowild(browser)
+                try:
+                    # If the user enters a non int number it throws a value error exception
+                    delay = int(input("Time delay in seconds between posts: "))
+                    # Quickly ensure delay is an int
+                    gowild.gowild(browser, delay)
+                # Catch the exception and ask the user to enter an int next time
+                except ValueError:
+                    print("Please enter an integer value for the delay")
             # Prompt user to make another selection, also giving them a chance to end the loop
             navigate = input("What would you like to do? (login, composetweet, scrape, posttweet) ")
 
