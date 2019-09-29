@@ -1,5 +1,5 @@
 from selenium import webdriver
-from functions import login, composetweet, posttweet, scrapetweets
+from functions import login, composetweet, posttweet, scrapetweets, gowild
 
 # Inputs to quit
 quitChars = ["q", "Q", "quit", "Quit"]
@@ -43,6 +43,8 @@ def main():
                 # Only if the user is logged in and has a tweet composed, post it
                 else:
                     posttweet.posttweet(browser)
+            elif navigate == "gowild":
+                gowild.gowild(browser)
             # Prompt user to make another selection, also giving them a chance to end the loop
             navigate = input("What would you like to do? (login, composetweet, scrape, posttweet) ")
 
