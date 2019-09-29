@@ -1,9 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 from listsanddicts import textfiledict, profiledict, people
-import getperson
-import filtertext
-import checkduplicates
+from functions import checkduplicates, filtertext, getperson
 
 
 # Updates the text files for the given person by scraping tweets from there twitter

@@ -1,7 +1,5 @@
-import markov
-import getperson
 from listsanddicts import textfiledict, sizedict
-import filtertext
+from functions import filtertext, getperson, markov
 
 
 # Composes a tweet based on the users preferred person and size

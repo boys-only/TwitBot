@@ -1,9 +1,5 @@
 from selenium import webdriver
-import login
-import composetweet
-import scrapetweets
-import posttweet
-
+from functions import login, composetweet, posttweet, scrapetweets
 
 # Inputs to quit
 quitChars = ["q", "Q", "quit", "Quit"]

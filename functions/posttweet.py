@@ -1,4 +1,4 @@
-import composetweet
+from functions import composetweet
 from listsanddicts import yesandno
 
 
