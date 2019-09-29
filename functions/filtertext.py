@@ -10,4 +10,5 @@ def filtertext(tweet):
     result = result.replace(',', '')
     # This one is for you cody/noel
     result = result.replace("tickets on sale", "")
+    result = result.replace("tmg", "")
     return result
