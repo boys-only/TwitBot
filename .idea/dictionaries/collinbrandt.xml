@@ -1,11 +1,19 @@
 <component name="ProjectDictionaryState">
   <dictionary name="collinbrandt">
     <words>
+      <w>autocompose</w>
+      <w>autopost</w>
+      <w>checkforduplicates</w>
       <w>codyko</w>
       <w>codynoelspock</w>
       <w>composetweet</w>
       <w>confirmpost</w>
+      <w>fieldset</w>
+      <w>filelines</w>
       <w>filtertext</w>
+      <w>getperson</w>
+      <w>gettweetsize</w>
+      <w>gowild</w>
       <w>kanye</w>
       <w>loggedin</w>
       <w>noelmiller</w>
@@ -15,10 +23,13 @@
       <w>prefs</w>
       <w>profiledict</w>
       <w>quiter</w>
+      <w>randperson</w>
       <w>reroll</w>
       <w>rerolling</w>
+      <w>rerolls</w>
       <w>scrapetrumptweets</w>
       <w>scrapeweets</w>
+      <w>signin</w>
       <w>soupfiy</w>
       <w>spockmusic</w>
       <w>textfiledict</w>

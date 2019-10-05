@@ -3,3 +3,5 @@ loginInfo.py
 .idea/workspace.xml
 .idea/workspace.xml
 *.xml
+.idea
+__pycache__
