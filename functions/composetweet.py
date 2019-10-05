@@ -13,6 +13,9 @@ def composetweet():
     if person in people.people:
         # Prompt user for desired size of tweet
         size = input("Tweet size? [s/m/l] ")
+        while size not in ["s","m","l"]:
+            print("Invalid size")
+            size = input("Tweet size? [s/m/l] ")
         # Compose a tweet using that person's text file
         # Open the text file
         file = open(textfiledict.textfiledict.get(person), "r")
