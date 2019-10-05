@@ -19,6 +19,7 @@ def gowild(browser, delay):
             # TODO randomly pick someone from the list (NOT ALL)
             # Seed the random number generator
             random.seed()
+
             # Pick a random number in the range of the list, and retrieve that person from the list
             randperson = people.people[random.randrange(0, people.people.__len__() - 1)]
             # TODO randomly pick a size
@@ -29,6 +30,7 @@ def gowild(browser, delay):
             # Post it
             autopost.autopost(browser, randperson, size)
             # Time delay in seconds between tweets
+            print(randperson)
             time.sleep(delay)
             # TODO Periodically scrape everyone (once a day)
     except KeyboardInterrupt:

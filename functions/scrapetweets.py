@@ -36,26 +36,25 @@ def scrapeweets():
         # Go through the list of people
         for i in range(people.people.__len__() - 1):
             person = people.people[i]
-            if person != "codynoelspock":
-                print(person)
-                # Set the page to scrape and file to write to using the dictionaries
-                page = requests.get(profiledict.profiledict.get(person))
-                file = open(textfiledict.textfiledict.get(person), "a+")
+            print(person)
+            # Set the page to scrape and file to write to using the dictionaries
+            page = requests.get(profiledict.profiledict.get(person))
+            file = open(textfiledict.textfiledict.get(person), "a+")
 
-                # Soupfiy it
-                souped = BeautifulSoup(page.text, 'html.parser')
+            # Soupfiy it
+            souped = BeautifulSoup(page.text, 'html.parser')
 
-                # Narrow search down to tweets
-                # <p class="TweetTextSize TweetTextSize--normal js-tweet-text tweet-text" lang="en" data-aria-label-part="0">
-                tweets = souped.find_all("p", class_="TweetTextSize TweetTextSize--normal js-tweet-text tweet-text")
+            # Narrow search down to tweets
+            # <p class="TweetTextSize TweetTextSize--normal js-tweet-text tweet-text" lang="en" data-aria-label-part="0">
+            tweets = souped.find_all("p", class_="TweetTextSize TweetTextSize--normal js-tweet-text tweet-text")
 
-                # For each tweet, remove all links and pictures, as well as periods and commas
-                for j in tweets:
-                    result = filtertext.filtertext(j.text)
-                    if not checkduplicates.checkforduplicates(person, result):
-                        file.write(result + "\n")
+            # For each tweet, remove all links and pictures, as well as periods and commas
+            for j in tweets:
+                result = filtertext.filtertext(j.text)
+                if not checkduplicates.checkforduplicates(person, result):
+                    file.write(result + "\n")
 
-                print("Scrape successful!")
-                file.close()
+            print("Scrape successful!")
+            file.close()
     else:
         print("Sorry, I can't scrape that person")

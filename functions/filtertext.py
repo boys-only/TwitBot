@@ -11,4 +11,7 @@ def filtertext(tweet):
     # This one is for you cody/noel
     result = result.replace("tickets on sale", "")
     result = result.replace("tmg", "")
+    result = result.replace("LOVE ISLAND", "")
+    result = result.replace("tickets on sale", "")
+
     return result
