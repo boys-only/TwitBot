@@ -16,6 +16,10 @@ def posttweet(browser):
         confirmpost = input("Confirm tweet? [y/n/reroll] ")
         # If the user approves of the tweet, continue with posting and break the loop
         if confirmpost in yesandno.affirmatives:
+            # Ensure the browser is larger enough for elements to be displayed
+            window = browser.current_window_handle
+            browser.switch_to.window(window)
+            browser.set_window_size(1250, 1250, window)
             # Post the tweet
             # XPATH for draft box
             # //*[@id="react-root"]/div/div/div/main/div/div/div/div[1]/div/div[2]/div[2]/div[1]/div/div/div[2]/div[1]/div/div/div/div/div/div/div/div/div[1]/div/div/div/div[2]/div
