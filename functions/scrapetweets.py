@@ -13,7 +13,8 @@ def scrapeweets():
         # Set the page to scrape and file to write to using the dictionaries
         page = requests.get(profiledict.profiledict.get(person))
         file = open(textfiledict.textfiledict.get(person), "a+")
-
+        # Open the text file for everyone
+        allfile = open(textfiledict.textfiledict.get("all"), "a+")
         # Soupfiy it
         souped = BeautifulSoup(page.text, 'html.parser')
 
@@ -28,9 +29,11 @@ def scrapeweets():
             # If the tweet isn't not already in the file write it
             if not checkduplicates.checkforduplicates(person, result):
                 file.write(result + "\n")
+                allfile.write(result + "\n")
 
         print("Scrape successful!")
         file.close()
+        allfile.close()
     # Scrape every person
     elif person == "all":
         # Go through the list of people
@@ -40,6 +43,8 @@ def scrapeweets():
             # Set the page to scrape and file to write to using the dictionaries
             page = requests.get(profiledict.profiledict.get(person))
             file = open(textfiledict.textfiledict.get(person), "a+")
+            # Open the text file for everyone
+            allfile = open(textfiledict.textfiledict.get("all"), "a+")
 
             # Soupfiy it
             souped = BeautifulSoup(page.text, 'html.parser')
@@ -53,8 +58,10 @@ def scrapeweets():
                 result = filtertext.filtertext(j.text)
                 if not checkduplicates.checkforduplicates(person, result):
                     file.write(result + "\n")
+                    allfile.write(result + "\n")
 
             print("Scrape successful!")
             file.close()
+            allfile.close()
     else:
         print("Sorry, I can't scrape that person")

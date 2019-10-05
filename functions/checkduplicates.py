@@ -10,5 +10,6 @@ def checkforduplicates(person, text):
     for line in filelines:
         if text in line:
             print("Duplicate Found")
+            print(text)
             return True
     return False

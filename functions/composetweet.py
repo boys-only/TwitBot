@@ -8,8 +8,8 @@ def composetweet():
     person = getperson.getperson()
     # Make sure the user isn't trying to tweet as everyone
     # I can do this in the future
-    if person == "all":
-        return "Sorry I can't tweet from everyone. Maybe in the future."
+    # if person == "all":
+    #     return "Sorry I can't tweet from everyone. Maybe in the future."
     # Prompt user for desired size of tweet
     size = input("Tweet size? [s/m/l] ")
     # Compose a tweet using that person's text file
