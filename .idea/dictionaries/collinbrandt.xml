@@ -3,10 +3,12 @@
     <words>
       <w>autocompose</w>
       <w>autopost</w>
+      <w>bindfuncttobuttn</w>
       <w>callcomposetweet</w>
       <w>calllogin</w>
       <w>callposttweet</w>
       <w>callscrapetweets</w>
+      <w>callwild</w>
       <w>checkforduplicates</w>
       <w>codyko</w>
       <w>codynoelspock</w>

@@ -41,8 +41,15 @@ class MainWindow(QMainWindow):
         self.tweetbutton.setGeometry(0, 0, 88, 40)
         self.tweetbutton.setStyleSheet("font: 13pt Arial")
         self.tweetbutton.move(self.loginbutton.pos().x() - 14, self.scrapebutton.pos().y() + self.scrapebutton.height())
-
+        # go wild button
+        self.gowildbutton = QPushButton(self)
+        self.gowildbutton.setText("Go Wild")
+        self.gowildbutton.setGeometry(0, 0, 88, 40)
+        self.gowildbutton.setStyleSheet("font: 13pt Arial")
+        self.gowildbutton.move(self.loginbutton.pos().x() - 14, self.tweetbutton.pos().y() + self.tweetbutton.height())
+    
     def update(self):
         pass
 
-
+    def bindfuncttobuttn(self, func, button):
+        pass

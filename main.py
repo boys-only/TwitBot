@@ -52,6 +52,11 @@ class TwitBot:
     def callscrapetweets():
         scrapetweets.scrapeweets()
 
+    # Right now the delay is static at 2 mins
+    # Need a way to pass the delay from the window in
+    def callwild(self):
+        gowild.gowild(self.browser, 120)
+
 
 def main():
     bot = TwitBot()
