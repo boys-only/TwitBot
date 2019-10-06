@@ -32,6 +32,7 @@ class TwitBot:
         # It makes it easier to pass parameters and such
         self.wind.loginbutton.clicked.connect(self.calllogin)
         self.wind.scrapebutton.clicked.connect(self.callscrapetweets)
+        self.wind.gowildbutton.clicked.connect(self.callwild)
 
         # Make sure to show the window
         self.wind.show()

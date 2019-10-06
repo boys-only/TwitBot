@@ -47,7 +47,7 @@ class MainWindow(QMainWindow):
         self.gowildbutton.setGeometry(0, 0, 88, 40)
         self.gowildbutton.setStyleSheet("font: 13pt Arial")
         self.gowildbutton.move(self.loginbutton.pos().x() - 14, self.tweetbutton.pos().y() + self.tweetbutton.height())
-    
+
     def update(self):
         pass
 
