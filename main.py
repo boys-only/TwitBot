@@ -33,7 +33,7 @@ class TwitBot:
         self.wind.loginbutton.clicked.connect(self.calllogin)
         self.wind.scrapebutton.clicked.connect(self.callscrapetweets)
         self.wind.gowildbutton.clicked.connect(self.callwild)
-
+        self.wind.tweetbutton.clicked.connect(self.callposttweet)
         # Make sure to show the window
         self.wind.show()
         # Actually executes the gui
@@ -65,6 +65,7 @@ def main():
         bot.__init__()
     finally:
         bot.browser.close()
+
 
 if __name__ == "__main__":
     main()
