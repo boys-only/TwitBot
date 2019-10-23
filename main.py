@@ -3,6 +3,7 @@ from functions import login, composetweet, posttweet, scrapetweets, gowild
 from gui import window
 import sys
 from PyQt5.QtWidgets import QApplication
+from listsanddicts import people
 
 
 # Inputs to quit
@@ -34,6 +35,7 @@ class TwitBot:
         self.wind.scrapebutton.clicked.connect(self.callscrapetweets)
         self.wind.gowildbutton.clicked.connect(self.callwild)
         self.wind.tweetbutton.clicked.connect(self.callposttweet)
+
         # Make sure to show the window
         self.wind.show()
         # Actually executes the gui
@@ -47,6 +49,7 @@ class TwitBot:
         composetweet.composetweet()
 
     def callposttweet(self):
+        self.wind.selectpersonscreen(people.people)
         posttweet.posttweet(self.browser)
 
     @staticmethod

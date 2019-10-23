@@ -4,6 +4,8 @@
       <w>autocompose</w>
       <w>autopost</w>
       <w>bindfuncttobuttn</w>
+      <w>btnarr</w>
+      <w>btnlabel</w>
       <w>callcomposetweet</w>
       <w>calllogin</w>
       <w>callposttweet</w>
@@ -20,10 +22,14 @@
       <w>getperson</w>
       <w>gettweetsize</w>
       <w>gowild</w>
+      <w>gowildbutton</w>
+      <w>homebtnarr</w>
       <w>kanye</w>
       <w>loggedin</w>
+      <w>loginbutton</w>
       <w>noelmiller</w>
       <w>passwordbox</w>
+      <w>peoplebtnarr</w>
       <w>postbutton</w>
       <w>posttweet</w>
       <w>prefs</w>
@@ -33,13 +39,17 @@
       <w>reroll</w>
       <w>rerolling</w>
       <w>rerolls</w>
+      <w>scrapebutton</w>
       <w>scrapetrumptweets</w>
       <w>scrapeweets</w>
+      <w>selectpersonscreen</w>
       <w>signin</w>
       <w>soupfiy</w>
       <w>spockmusic</w>
       <w>textfiledict</w>
+      <w>tweetbutton</w>
       <w>tweetsizedict</w>
+      <w>twitlabel</w>
       <w>usernamebox</w>
     </words>
   </dictionary>
