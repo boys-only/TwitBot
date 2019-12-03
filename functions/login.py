@@ -14,7 +14,8 @@ def login(browser):
         # Find login button and click
         # <input type="submit" class="EdgeButton EdgeButton--secondary EdgeButton--medium submit js-submit" value="Log in">
         # xpath: //*[@id=\"doc\"]/div/div[1]/div[1]/div[2]/div[2]/div/a[2]
-        loginButton = browser.find_element_by_xpath("//*[@id=\"doc\"]/div/div[1]/div[1]/div[2]/div[2]/div/a[2]")
+        # WebDriverWait(browser, 5).until(EC.presence_of_element_located((By.XPATH, "//*[@id=\"doc\"]/div/div[1]/div[1]/div[2]/div[2]/div/a[2]")))
+        loginButton = WebDriverWait(browser, 5).until(EC.presence_of_element_located((By.XPATH, "//*[@id=\"doc\"]/div/div[1]/div[1]/div[2]/div[2]/div/a[2]")))
         loginButton.click()
 
         # Find username box and enter username
