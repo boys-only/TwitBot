@@ -5,3 +5,4 @@ loginInfo.py
 *.xml
 .idea
 __pycache__
+geckodriver.log
