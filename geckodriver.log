@@ -1,0 +1,29 @@
+1577385998731	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.GaBnKnxmDZIN"
+1577386005165	Marionette	INFO	Listening on port 36959
+1577386005277	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: chrome://browser/content/browser.js, line 7054: TypeError: cannot use the given object as a weak map key
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+
+###!!! [Child][MessageChannel] Error: (msgtype=0x2D00AF,name=PContent::Msg_ScriptError) Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+[Parent 2718, Gecko_IOThread] WARNING: pipe error (50): Connection reset by peer: file /build/firefox-esr-TDEydZ/firefox-esr-60.9.0esr/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 342
+1577386113574	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.H1Prumv2i2hk"
+1577386120045	Marionette	INFO	Listening on port 46291
+1577386120169	Marionette	WARN	TLS certificate errors will be ignored for this session
+[Child 3201, Chrome_ChildThread] WARNING: pipe error: Broken pipe: file /build/firefox-esr-TDEydZ/firefox-esr-60.9.0esr/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 694
+[Child 3201, Chrome_ChildThread] WARNING: pipe error: Broken pipe: file /build/firefox-esr-TDEydZ/firefox-esr-60.9.0esr/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 694
+[Child 3201, Chrome_ChildThread] WARNING: pipe error: Broken pipe: file /build/firefox-esr-TDEydZ/firefox-esr-60.9.0esr/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 694
+1577386784824	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.v5ZXfKFAcPYZ"
+1577386792082	Marionette	INFO	Listening on port 36739
+1577386792166	Marionette	WARN	TLS certificate errors will be ignored for this session
+*** UTM:SVC TimerManager:registerTimer called after profile-before-change notification. Ignoring timer registration for id: telemetry_modules_ping
