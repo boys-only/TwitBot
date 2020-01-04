@@ -22,7 +22,7 @@ def main():
         # browser.switch_to.window(window)
 
         # The user can use the console to to various things
-        navigate = input("What would you like to do? (login, composetweet, scrape, posttweet) ")
+        navigate = input("What would you like to do? (login, composetweet, scrape, posttweet, gowild) ")
         navigate = navigate.lower()
         # Loop runs until user opts to quit
         while navigate not in quitChars:
@@ -45,6 +45,9 @@ def main():
                     posttweet.posttweet(browser)
             elif navigate == "gowild":
                 try:
+                    if not loggedin:
+                        login.login(browser)
+                        loggedin = True
                     # If the user enters a non int number it throws a value error exception
                     delay = int(input("Time delay in seconds between posts: "))
                     # Quickly ensure delay is an int
@@ -53,7 +56,7 @@ def main():
                 except ValueError:
                     print("Please enter an integer value for the delay")
             # Prompt user to make another selection, also giving them a chance to end the loop
-            navigate = input("What would you like to do? (login, composetweet, scrape, posttweet) ")
+            navigate = input("What would you like to do? (login, composetweet, scrape, posttweet, gowild) ")
 
     finally:
         # Once the loop ends close the browser

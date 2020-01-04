@@ -5,5 +5,6 @@ textfiledict = {
     "noel miller": "./textfiles/noelmiller.txt",
     "spock music": "./textfiles/spockmusic.txt",
     "dril": "./textfiles/dril.txt",
+    "wendy": "./textfiles/wendy.txt",
     "all": "./textfiles/all.txt"
 }

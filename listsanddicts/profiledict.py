@@ -5,5 +5,6 @@ profiledict = {
     "codyko": "https://twitter.com/codyko",
     "noel miller": "https://twitter.com/thenoelmiller",
     "spock music": "https://twitter.com/spockmusic",
-    "dril": "https://twitter.com/dril"
+    "dril": "https://twitter.com/dril",
+    "wendy": "https://twitter.com/Wendys"
 }

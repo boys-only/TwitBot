@@ -1,6 +1,6 @@
 import time
 
-from functions import autopost, scrapetweets, login
+from functions import autopost, scrapetweets
 import random
 from listsanddicts import people
 
@@ -11,7 +11,7 @@ from listsanddicts import people
 # Either by using ^C (Control C), or by attempting to stop the program in the IDE
 # * * *
 def gowild(browser, delay):
-    login.login(browser)
+    
     try:
         while True:
             # TODO create loop that runs indefinitely
