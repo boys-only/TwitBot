@@ -4,5 +4,6 @@ profiledict = {
     "kanye": "https://twitter.com/kanyewest",
     "dril": "https://twitter.com/dril",
     "wendy": "https://twitter.com/Wendys",
-    "harvard": "https://twitter.com/heelyfanaccount"
+    "harvard": "https://twitter.com/heelyfanaccount",
+    "beans": "https://twitter.com/goodbeanalt"
 }
