@@ -6,3 +6,4 @@ loginInfo.py
 .idea
 __pycache__
 geckodriver.log
+__pycache__/*
